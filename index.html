@@ -1,0 +1,345 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#1E6B4A"><title>BUDI · Find your wellness buddy</title><meta name="description" content="Talk to BUDI and get matched with a wellness buddy nearby."><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Ccircle cx=%2212%22 cy=%2216%22 r=%229%22 fill=%22%231E6B4A%22/%3E%3Ccircle cx=%2220%22 cy=%2216%22 r=%229%22 fill=%22%23E9A93A%22/%3E%3C/svg%3E"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap"><style>
+:root{
+--bg:#F3F6F2; --card:#FFFFFF; --ink:#14302A; --muted:#5A6D65; --line:#D6E1D9;
+--brand:#1E6B4A; --brand-ink:#FFFFFF; --brand-soft:#E2EEE6; --sun:#E9A93A; --sun-ink:#14302A; --sun-soft:#FBEFD5;
+--bubble-ai:#FFFFFF; --bubble-me:#1E6B4A; --bubble-me-ink:#FFFFFF; --danger:#A8402D;
+--display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+--body:"Figtree","Segoe UI",system-ui,-apple-system,sans-serif;
+--r:16px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+--bg:#0E1B17; --card:#15261F; --ink:#E6EFE9; --muted:#9DB1A7; --line:#2A3F36;
+--brand:#4FB585; --brand-ink:#0E1B17; --brand-soft:#1C3A2E; --sun:#F0BD5E; --sun-ink:#14302A; --sun-soft:#3A2F18;
+--bubble-ai:#15261F; --bubble-me:#2F8A61; --bubble-me-ink:#FFFFFF; --danger:#E58A76; color-scheme:dark}}
+:root[data-theme="dark"]{
+--bg:#0E1B17; --card:#15261F; --ink:#E6EFE9; --muted:#9DB1A7; --line:#2A3F36;
+--brand:#4FB585; --brand-ink:#0E1B17; --brand-soft:#1C3A2E; --sun:#F0BD5E; --sun-ink:#14302A; --sun-soft:#3A2F18;
+--bubble-ai:#15261F; --bubble-me:#2F8A61; --bubble-me-ink:#FFFFFF; --danger:#E58A76; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+.app{max-width:460px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;
+padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 24px}
+header.top{display:flex;align-items:center;justify-content:space-between;padding-block:14px 10px;gap:10px}
+.logo{display:flex;align-items:center;gap:8px;font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:.04em;color:var(--brand)}
+.dots{display:inline-flex}.dots i{width:14px;height:14px;border-radius:50%;display:block;background:var(--brand)}
+.dots i+i{background:var(--sun);margin-left:-5px;box-shadow:0 0 0 2px var(--bg)}
+.pill{font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--brand-soft);color:var(--brand);white-space:nowrap}
+.pill.off{background:var(--sun-soft);color:var(--ink)}
+main{flex:1;display:flex;flex-direction:column;gap:14px;min-height:0}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:34px;color:var(--brand)} h2{font-size:23px} h3{font-size:18px}
+p{margin:0}
+.muted{color:var(--muted)} .small{font-size:13px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.btn{border:0;border-radius:999px;padding:14px 20px;font-weight:700;font-size:16px;cursor:pointer;background:var(--brand);color:var(--brand-ink);width:100%}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn.sun{background:var(--sun);color:var(--sun-ink)}
+.btn:disabled{opacity:.45;cursor:default}
+.btn:focus-visible,.chip:focus-visible,.link:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.row{display:flex;gap:10px}
+.link{background:none;border:0;padding:0;color:var(--brand);font-weight:600;text-decoration:underline;cursor:pointer;font-size:14px}
+.steps{display:grid;gap:10px}
+.step{display:flex;gap:12px;align-items:flex-start}
+.num{flex:none;width:30px;height:30px;border-radius:50%;background:var(--brand);color:var(--brand-ink);font-family:var(--display);font-weight:800;display:flex;align-items:center;justify-content:center}
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:var(--sun-soft);color:var(--ink)}
+.chat{flex:1;display:flex;flex-direction:column;gap:10px;overflow-y:auto;padding-block:4px 8px;min-height:240px}
+.b{max-width:85%;padding:10px 13px;border-radius:16px;white-space:pre-wrap;overflow-wrap:anywhere}
+.b.ai{background:var(--bubble-ai);border:1px solid var(--line);border-bottom-left-radius:5px;align-self:flex-start}
+.b.me{background:var(--bubble-me);color:var(--bubble-me-ink);border-bottom-right-radius:5px;align-self:flex-end}
+.b.typing{color:var(--muted);font-style:italic}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:8px 13px;font-size:14px;font-weight:600;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
+.compose{display:flex;gap:8px;align-items:center;position:sticky;bottom:0;background:var(--bg);padding-block:8px calc(4px + env(safe-area-inset-bottom,0px))}
+.compose input{flex:1;min-width:0;font:inherit;padding:13px 15px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--ink)}
+.icon{flex:none;width:48px;height:48px;border-radius:50%;border:0;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.icon.send{background:var(--brand);color:var(--brand-ink)}
+.icon.mic{background:var(--sun);color:var(--sun-ink)}
+.hint{font-size:12.5px;color:var(--muted);text-align:center}
+.kv{display:grid;grid-template-columns:104px minmax(0,1fr) auto;gap:8px 12px;align-items:baseline}
+.kv dt{color:var(--muted);font-size:14px}.kv dd{margin:0;font-weight:600;min-width:0;overflow-wrap:anywhere}
+.av{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:30px;background:var(--sun-soft);color:var(--brand);flex:none}
+.av.sm{width:34px;height:34px;font-size:15px}
+.why{display:flex;flex-wrap:wrap;gap:6px}
+.why span{background:var(--brand-soft);color:var(--brand);font-size:13px;font-weight:600;padding:4px 10px;border-radius:999px}
+.score{font-family:var(--display);font-weight:800;font-size:28px;color:var(--brand);font-variant-numeric:tabular-nums}
+.spinner{width:56px;height:56px;border-radius:50%;border:5px solid var(--brand-soft);border-top-color:var(--brand);animation:spin 1s linear infinite;margin:10px auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion: reduce){.spinner{animation:none}}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.days .chip{padding:8px 0;text-align:center}
+label.f{display:grid;gap:6px;font-size:14px;font-weight:600}
+label.f input,label.f select{font:inherit;padding:11px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);width:100%}
+.today{background:var(--sun-soft);border-color:transparent}
+.week{display:grid;grid-template-columns:62px repeat(7,1fr);gap:6px 4px;align-items:center;font-size:12px}
+.week .d{text-align:center;color:var(--muted);font-weight:600}
+.week .who{font-weight:600;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dot{width:22px;height:22px;border-radius:50%;margin:0 auto;border:2px solid var(--line)}
+.dot.on{background:var(--brand);border-color:var(--brand)}
+.dot.skip{background:var(--line)}
+.dot.today{box-shadow:0 0 0 2px var(--sun)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-weight:600;font-size:14px;z-index:20;max-width:calc(100% - 32px);text-align:center}
+.note{font-size:12.5px;color:var(--muted);line-height:1.4}
+.big{font-family:var(--display);font-weight:800;font-size:30px;color:var(--brand);line-height:1}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+</style><style>
+.icon.mic.on{background:var(--danger);color:#fff;animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(168,64,45,.45)}50%{box-shadow:0 0 0 10px rgba(168,64,45,0)}}
+@media (prefers-reduced-motion: reduce){.icon.mic.on{animation:none}}
+</style></head><body><style>
+.banner{background:var(--sun-soft);border-radius:12px;padding:10px 12px;font-size:14px}
+.net{display:flex;gap:16px;align-items:baseline;flex-wrap:wrap}
+.net b{font-family:var(--display);font-size:26px;color:var(--brand);font-variant-numeric:tabular-nums}
+.tag.real{background:var(--brand-soft);color:var(--brand)}
+table.t{border-collapse:collapse;width:100%;font-size:14px}
+table.t th,table.t td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+table.t th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+.err{color:var(--danger);font-size:14px}
+</style>
+<div class="app">
+<header class="top">
+<div class="logo"><span class="dots" aria-hidden="true"><i></i><i></i></span>BUDI</div>
+<span id="netpill" class="pill" hidden></span>
+</header>
+<main id="main" aria-live="polite"><section class="card" style="text-align:center"><div class="spinner" aria-hidden="true"></div><p class="muted">Loading BUDI…</p></section></main>
+</div>
+<div id="toast" class="toast" role="status" hidden></div>
+<script>(function(){var ua=navigator.userAgent,ios=/iPhone|iPad|iPod/.test(ua),inApp=(ios&&!/Safari\//.test(ua))||/FBAN|FBAV|Instagram|Line\/|WhatsApp|; wv\)/.test(ua),R=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(inApp){try{window.SpeechRecognition=undefined;window.webkitSpeechRecognition=undefined}catch(e){}}
+else if(R){var W=function(){var r=new R(),done=false;r.addEventListener("end",function(){done=true});r.addEventListener("error",function(){setTimeout(function(){if(!done){done=true;if(r.onend)r.onend()}},400)});return r};try{window.SpeechRecognition=W;window.webkitSpeechRecognition=W}catch(e){}}
+document.addEventListener("DOMContentLoaded",function(){if(!inApp)return;var u=location.href.replace(/^https:\/\//,""),href=ios?"x-safari-https://"+u:"intent://"+u+"#Intent;scheme=https;package=com.android.chrome;end",b=document.createElement("div"),s=document.createElement("span"),a=document.createElement("a");
+b.className="banner";b.style.cssText="margin-top:4px;display:flex;gap:10px;align-items:center;justify-content:space-between";s.textContent="For voice, open BUDI in "+(ios?"Safari":"Chrome")+" (or ⋯ → Open in browser).";
+a.href=href;a.className="btn";a.style.cssText="width:auto;padding:9px 14px;text-decoration:none;font-size:14px;white-space:nowrap;flex:none";a.textContent="Open in "+(ios?"Safari":"Chrome");b.append(s,a);var h=document.querySelector("header.top");if(h)h.after(b)})})();</script><script>!function(){"use strict"
+;const e="https://script.google.com/macros/s/AKfycby7yscGD4aXWZGumHOMU7dpV-_alRgAilJEW1hFFKFiwhGCgjFGBBvSgnGYbrTzJ8i4SQ/exec",t=new URLSearchParams(location.search),a={
+view:"admin"===t.get("view")?"admin":"app",key:(t.get("key")||"").slice(0,80),ai:!1,areas:{Singapore:{"Tanjong Pagar":[1.2764,103.8458],"Raffles Place":[1.284,103.8515],
+"Marina Bay":[1.2806,103.8541],Bugis:[1.3006,103.8559],Orchard:[1.3048,103.8318],"Tiong Bahru":[1.2852,103.827],Novena:[1.3203,103.8437],"Toa Payoh":[1.3343,103.8563],
+Bishan:[1.3508,103.8485],"Holland Village":[1.3112,103.7958],"Buona Vista":[1.3072,103.79],Clementi:[1.315,103.7651],"Paya Lebar":[1.3177,103.8925],Tampines:[1.353,103.945],
+"Jurong East":[1.3331,103.7423],Sengkang:[1.3916,103.8954],Punggol:[1.4043,103.902],Woodlands:[1.4369,103.7865]},Tokyo:{Marunouchi:[35.6812,139.7671],Ginza:[35.6717,139.765],
+Shibuya:[35.658,139.7016],Shinjuku:[35.6896,139.7006],Roppongi:[35.6628,139.7314],Ebisu:[35.6467,139.7101],Nakameguro:[35.644,139.699],Meguro:[35.6339,139.7157],
+Shinagawa:[35.6285,139.7387],"Azabu-Juban":[35.6563,139.7368],Ikebukuro:[35.7295,139.7109],Toyosu:[35.655,139.7962]}}};function n(t){return fetch(e,{method:"POST",headers:{
+"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(t)}).then((e=>e.json())).then((e=>{if(e.error)throw new Error(e.error);return e.res}))}n({config:1}).then((e=>{
+a.ai=!(!e||!e.ai)})).catch((()=>{}));const o=a.areas,i={slots:{morning:"Weekday mornings",lunch:"Weekday lunch",evening:"Weekday evenings",weekend:"Weekends"},activities:{
+walking:"Walking",running:"Running",gym:"Gym",yoga:"Yoga",cycling:"Cycling",swimming:"Swimming",other:"Something else"},goal:{"lose weight":"Lose weight",
+"keep weight off":"Keep weight off","get fitter":"Get fitter","more energy":"More energy"},eating:{balanced:"Balanced","intermittent fasting":"Intermittent fasting",
+"plant-based":"Plant-based","low-carb":"Low-carb","no preference":"No preference"},mode:{online:"Online check-ins",meet:"Open to meeting up"},gender:{woman:"Woman",man:"Man",
+"prefer not to say":"Prefer not to say"},age:{"18-24":"18–24","25-34":"25–34","35-44":"35–44","45-54":"45–54","55+":"55+"},buddyGender:{any:"Anyone",women:"Women only",
+men:"Men only"}},l=["name","area","slots","activities","goal","eating","mode","gender","age","buddyGender"],s={slots:1,activities:1},r={name:"Name",area:"Area",slots:"Free time",
+activities:"Activities",interests:"Interests",goal:"Goal",eating:"Eating style",mode:"Buddy style",gender:"Gender",age:"Age range",buddyGender:"Buddy preference"},c={
+name:"Hi, I'm BUDI. I'll match you with someone nearby who shares your routine, so healthy habits stick. What should I call you?",
+area:"Nice to meet you, {name}! Where do you spend most weekdays? Tell me your neighbourhood, or pick one.",slots:"When do you usually have time to move? Pick all that fit.",
+activities:"What do you like doing, or want to do more of? Tell me in your own words, or pick.",goal:"What are you working towards right now?",eating:"How do you usually eat?",
+mode:"Would you rather keep it to online check-ins, or be open to meeting your buddy later on?",gender:"Two quick ones for matching and safety. How do you describe yourself?",
+age:"And your age range?",buddyGender:"Any preference for your buddy's gender? Most people choose anyone."},d=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];function p(){let e=""
+;const t=new Uint8Array(20);return(window.crypto||window.msCrypto).getRandomValues(t),t.forEach((t=>e+="abcdefghijklmnopqrstuvwxyz0123456789"[t%36])),e}let u=null,h={chat:[],
+field:null,profile:{},mode:"setup"};try{u=localStorage.getItem("budi-uid"),u||(u=p(),localStorage.setItem("budi-uid",u));const e=localStorage.getItem("budi-local")
+;e&&(h=Object.assign(h,JSON.parse(e)))}catch(e){u=u||p()}function m(){try{localStorage.setItem("budi-local",JSON.stringify(h))}catch(e){}}let y=null;function g(e,t){t.focus()
+;let a=document.getElementById("vhint");a||(a=A("div",{id:"vhint",class:"banner",style:"margin-top:4px"
+},"Voice isn't available in this browser. Tap the 🎤 on your phone keyboard instead (iPhone: bottom-right of the keyboard; Android: top-right), talk, then tap the green arrow. Tip: open this link in Safari or Chrome for one-tap voice."),
+e.parentNode.before(a)),a.scrollIntoView({block:"nearest"})}function f(e,t){return n({action:e,uid:u,data:Object.assign({dates:O()},t||{})})}
+let b=null,w="loading",k=null,v=!1,x=[],S=!1;function T(e){b=e;const t=e.network,a=document.getElementById("netpill");a.hidden=!1,
+a.textContent=t.people+(1===t.people?" person":" people")+" · "+t.pairs+(1===t.pairs?" pair":" pairs"),e.profile&&!h.profile.name&&(h.profile=Object.assign({},e.profile)),
+"declined"!==e.notice||h.seenNotice||(C("That match didn't go ahead. BUDI will find someone else."),h.seenNotice=1),
+"ended"!==e.notice||h.seenEnded||(C("Your buddy ended the match. Find someone new when you're ready."),h.seenEnded=1)}function j(e,t){clearInterval(k),e&&(k=setInterval((async()=>{
+if(v||document.hidden)return;const e=JSON.stringify([b&&b.proposal,b&&b.match]);await async function(){try{T(await f("state"))}catch(e){}}()
+;e!==JSON.stringify([b&&b.proposal,b&&b.match])&&R()}),t||8e3))}function A(e,t,...a){const n=document.createElement(e);for(const e in t||{}){const a=t[e]
+;null!=a&&!1!==a&&(e.startsWith("on")?n.addEventListener(e.slice(2),a):"class"===e?n.className=a:"html"===e?n.innerHTML=a:n.setAttribute(e,!0===a?"":a))}
+for(const e of a.flat())null!=e&&!1!==e&&n.append(e.nodeType?e:String(e));return n}function C(e){const t=document.getElementById("toast");t.textContent=e,t.hidden=!1,
+clearTimeout(C.t),C.t=setTimeout((()=>t.hidden=!0),3e3)}function I(e){for(const t in o)if(o[t][e])return t;return null}function B(e,t){
+return null==t||Array.isArray(t)&&!t.length?"Not set":"area"===e?t+(I(t)?", "+I(t):""):"interests"===e?t.join(", "):Array.isArray(t)?t.map((t=>i[e]&&i[e][t]||t)).join(", "):i[e]&&i[e][t]||t
+}function D(){return l.find((e=>{const t=h.profile[e];return null==t||""===t||Array.isArray(t)&&!t.length}))||null}function N(){return((new Date).getDay()+6)%7}function O(){
+const e=N();return d.map(((t,a)=>function(e){const t=new Date;return t.setDate(t.getDate()+e),
+t.getFullYear()+"-"+String(t.getMonth()+1).padStart(2,"0")+"-"+String(t.getDate()).padStart(2,"0")}(a-e)))}const W=document.getElementById("main");function E(e){v=!1,
+C(e&&e.message?e.message.replace(/^Exception:\s*/,""):"Something went wrong. Try again.")}function G(e,t){const a=" "+t.toLowerCase()+" ",n=(...e)=>e.some((e=>a.includes(e)))
+;switch(e){case"name":{
+const e=(t.replace(/^(hi|hello|hey)[,!.\s]*/i,"").replace(/^(i'?m|i am|my name is|call me|it'?s)\s+/i,"").trim().split(/\s+/)[0]||"").replace(/[^\p{L}\-']/gu,"").slice(0,20)
+;return e?{name:(i=e,i?i.charAt(0).toUpperCase()+i.slice(1):i)}:{}}case"area":{
+const e=Object.keys(o.Singapore).concat(Object.keys(o.Tokyo)).find((e=>a.includes(e.toLowerCase())||"Raffles Place"===e&&a.includes("raffles")||"Marina Bay"===e&&a.includes("marina")||"Azabu-Juban"===e&&a.includes("azabu")))
+;return e?{area:e}:{}}case"slots":{const e=[];return n("morning","early","before work"," am ")&&e.push("morning"),n("lunch","noon","midday")&&e.push("lunch"),
+n("evening","after work","night"," pm ")&&e.push("evening"),n("weekend","saturday","sunday")&&e.push("weekend"),e.length?{slots:e}:{}}case"activities":{const e=[]
+;return n("walk","hike","hiking")&&e.push("walking"),n(" run","jog","marathon")&&e.push("running"),n("gym","weight","strength","lift")&&e.push("gym"),
+n("yoga","pilates","stretch")&&e.push("yoga"),n("cycl","bike","ride")&&e.push("cycling"),n("swim")&&e.push("swimming"),e.length?{activities:e}:{}}case"goal":
+return n("keep","maintain")?{goal:"keep weight off"}:n("lose","weight","slim")?{goal:"lose weight"}:n("fit","strong","stamina","muscle")?{goal:"get fitter"
+}:n("energy","tired","sleep")?{goal:"more energy"}:{};case"eating":return n("fast","16:8","skip breakfast")?{eating:"intermittent fasting"}:n("plant","vegan","vegetarian")?{
+eating:"plant-based"}:n("low carb","low-carb","keto","less rice")?{eating:"low-carb"}:n("balanced","normal","mix","everything")?{eating:"balanced"
+}:n("no pref","don't","dont","anything")?{eating:"no preference"}:{};case"mode":return n("meet","in person","together")?{mode:"meet"}:n("online","chat","text","app","message")?{
+mode:"online"}:{};case"gender":return n("woman","female","girl","lady")?{gender:"woman"}:n(" man ","male","guy")?{gender:"man"}:n("prefer not","rather not")?{
+gender:"prefer not to say"}:{};case"age":{const e=parseInt((a.match(/\d{2}/)||[])[0],10);return e?{age:e<25?"18-24":e<35?"25-34":e<45?"35-44":e<55?"45-54":"55+"}:{}}
+case"buddyGender":return n("any","don't mind","dont mind","no pref","either","whoever")?{buddyGender:"any"}:n("women","woman","female","lady","ladies")?{buddyGender:"women"
+}:n(" men","man ","male","guy")?{buddyGender:"men"}:{}}var i;return{}}function M(e,t){h.chat.push({from:e,text:t}),h.chat.length>60&&h.chat.splice(0,h.chat.length-60),m()}
+function P(e){h.field=e,e&&M("ai",c[e].replace("{name}",h.profile.name||"there")),m()}function L(){const e=D()
+;if("edit"===h.mode||!e)return e||"edit"===h.mode||M("ai","That's everything I need. Here's your profile."),async function(){v=!0;try{T(await f("profile",{profile:h.profile})),
+v=!1,h.mode="setup",h.field=null,m(),F("summary")}catch(e){E(e)}}();P(e),Y()}function U(e,t,a){if(M("me",a),"city"===e)return h.profile.city=t,h.field="area",m(),void Y()
+;h.profile[e]=t,"area"===e&&(h.profile.city=I(t)),x=[],L()}function F(e){w=e,Y()}function R(){
+b&&(b.match?"plan"!==w&&F(b.match.plan&&b.match.plan.by||h.planned===b.match.since?"home":"plan"):b.proposal?F("proposal"):b.complete?F("chat"===w?"chat":b.none&&"nomatch"===w?"nomatch":"summary"):F(h.chat.length?"chat":"welcome"))
+}function Y(){W.replaceChildren(),j(!1),{welcome:J,chat:H,summary:z,proposal:V,nomatch:q,plan:K,home:_,admin:Q}[w]?.()}function J(){const e=b?b.network:{people:0,pairs:0}
+;W.append(A("section",{class:"card",style:"display:grid;gap:14px;padding:22px"
+},A("h1",null,"Find your wellness buddy"),A("p",null,"Talk to BUDI for two minutes. You'll be matched with someone nearby on the same routine, and you keep each other going with a one-tap daily check-in."),A("div",{
+class:"net"},A("span",null,A("b",null,String(e.people))," people on BUDI"),A("span",null,A("b",null,String(e.pairs)),1===e.pairs?" buddy pair":" buddy pairs")),A("div",{
+class:"steps"},A("div",{class:"step"},A("span",{class:"num"},"1"),A("div",null,A("b",null,"Talk, don't fill forms"),A("p",{class:"muted small"
+},"Tap the mic and speak, or type if you prefer."))),A("div",{class:"step"},A("span",{class:"num"},"2"),A("div",null,A("b",null,"Get matched with a real person"),A("p",{
+class:"muted small"},"Other people using this link come first. Demo buddies fill in if nobody fits yet."))),A("div",{class:"step"},A("span",{class:"num"
+},"3"),A("div",null,A("b",null,"Check in together"),A("p",{class:"muted small"},"Agree a plan, tap Done, and see your buddy's days too.")))),A("button",{class:"btn",onclick:()=>{
+h.chat.length||P("name"),F("chat")}},h.chat.length?"Continue":"Start"),A("p",{class:"note"
+},"Prototype for NUS EMBA BME5405, Group 4. Your matched buddy sees your first name, age range, neighbourhood and plan, never your contact details. No login; your profile is tied to this phone's browser.")))
+}function H(){const e=A("div",{class:"chat"});for(const t of h.chat)e.append(A("div",{class:"b "+t.from},t.text));S&&e.append(A("div",{class:"b ai typing"},"BUDI is thinking…")),
+W.append(e);const t=h.field;if(!S&&"update"!==h.mode&&t){const e=A("div",{class:"chips",role:"group","aria-label":"Quick answers"});if("area"===t)if(h.profile.city){
+e.append(A("button",{class:"chip",onclick:()=>{delete h.profile.city,m(),Y()}},"‹ City"));for(const t of Object.keys(o[h.profile.city]))e.append(A("button",{class:"chip",
+onclick:()=>U("area",t,t)},t))}else for(const t of Object.keys(o))e.append(A("button",{class:"chip",onclick:()=>U("city",t,t)},t));else if(s[t]){
+for(const a in i[t])e.append(A("button",{class:"chip","aria-pressed":x.includes(a)?"true":"false",onclick:()=>{x=x.includes(a)?x.filter((e=>e!==a)):x.concat(a),Y()}},i[t][a]))
+;e.append(A("button",{class:"chip",style:"background:var(--sun);border-color:var(--sun);color:var(--sun-ink)",disabled:!x.length||null,
+onclick:()=>U(t,x.slice(),x.map((e=>i[t][e])).join(", "))},"Next →"))}else if(i[t])for(const a in i[t])e.append(A("button",{class:"chip",onclick:()=>U(t,a,i[t][a])},i[t][a]))
+;e.childNodes.length&&W.append(e)}"update"!==h.mode||S||W.append(A("button",{class:"btn ghost",onclick:()=>{h.mode="setup",m(),R()}},"Done"));const n=A("input",{id:"msg",
+type:"text",enterkeyhint:"send",autocomplete:"off",placeholder:"update"===h.mode?"What's changed?":"Type or speak your answer","aria-label":"Your message"}),d=()=>{const e=n.value
+;n.value="",async function(e){if(!(e=e.trim())||S)return;M("me",e);const t=h.field,n="update"===h.mode;if(a.ai){S=!0,Y();try{const a=(()=>{const e=h.profile[t]
+;!n&&t&&(h.profile[t]=e??"__x");const a=D();return!n&&t&&(void 0===e?delete h.profile[t]:h.profile[t]=e),a})(),o=await f("ai",{text:e,field:t,update:n,profile:h.profile,
+next:a?c[a].replace("{name}",h.profile.name||""):""});if(S=!1,o.changed&&o.changed.length){if(h.profile=Object.assign(h.profile,o.updates),n){M("ai",o.reply||"Updated.");try{
+T(await f("profile",{profile:h.profile}))}catch(e){}return void Y()}const e=D();return e?(M("ai",o.reply||c[e]),h.field=e,m(),void Y()):(o.reply&&M("ai",o.reply),L())}
+return M("ai",o.reply||"Sorry, I didn't catch that. You can also tap an option."),void Y()}catch(e){S=!1}}if(n){let t={};for(const a of l)"name"!==a&&Object.assign(t,G(a,e))
+;if(Object.assign(h.profile,t),t.area&&(h.profile.city=I(t.area)),Object.keys(t).length){M("ai","Updated: "+Object.keys(t).map((e=>r[e]+" → "+B(e,t[e]))).join("; ")+".");try{
+T(await f("profile",{profile:h.profile}))}catch(e){}}else M("ai",'I couldn\'t tell what changed. Try words like "lunch", "gym", "weekends" or a neighbourhood name.')
+;return void Y()}const o=G(t,e),X={},Z=f=>{const v=h.profile[f];return!(null==v||""===v||Array.isArray(v)&&!v.length)};for(const f of["area","slots","activities","goal"])f===t||Z(f)||Object.assign(X,G(f,e));if("age"!==t&&!Z("age")){const q=e.match(/\b(?:i'?m|i am|aged?)\s+(\d{2})\b|\b(\d{2})\s*(?:years? old|yo)\b/i);q&&Object.assign(X,G("age",q[1]||q[2]))}"mode"===t||Z("mode")||!/\b(meet ?up|meet in person|in person)\b/i.test(e)||(X.mode="meet");if(!Object.keys(o).length&&!Object.keys(X).length)return M("ai","I didn't quite catch that. Could you say it another way, or tap one of the options?"),void Y()
+;const ar=o.area||X.area,ex=Object.keys(X).filter(k=>!(k in o));if(Object.assign(h.profile,X,o),ar&&(h.profile.city=I(ar)),ex.length&&M("ai","Noted too: "+ex.map(k=>r[k]+" → "+B(k,X[k])).join("; ")+"."),"activities"===t){
+const t=e.toLowerCase().replace(/[^\p{L}\s,]/gu,"").split(/,|\band\b/).map((e=>e.trim())).filter((e=>e&&e.split(" ").length<=4)).slice(0,4);t.length&&(h.profile.interests=t)}L()
+}(e)};n.addEventListener("keydown",(e=>{"Enter"===e.key&&(e.preventDefault(),d())})),W.append(A("div",{class:"compose"},A("button",{class:"icon mic","aria-label":"Speak",
+onclick:e=>function(e,t,a){const n=window.SpeechRecognition||window.webkitSpeechRecognition;if(y){try{y.stop()}catch(e){}return}if(!n)return g(e,t);let o;try{o=new n}catch(a){
+return g(e,t)}y=o,o.lang="en-US",o.interimResults=!0,o.continuous=!1,o.maxAlternatives=1;const i=t.placeholder;let l=!1;e.classList.add("on"),
+e.setAttribute("aria-label","Stop listening"),t.placeholder="Listening… speak now",o.onresult=e=>{t.value=Array.from(e.results).map((e=>e[0].transcript)).join("")},o.onerror=a=>{
+l=!0,"not-allowed"===a.error||"service-not-allowed"===a.error||"audio-capture"===a.error?(C("Allow the microphone for this page, or use your keyboard's mic"),
+g(e,t)):"no-speech"===a.error&&C("Didn't hear anything. Tap the mic and try again.")},o.onend=()=>{y=null,e.classList.remove("on"),e.setAttribute("aria-label","Speak"),
+t.placeholder=i,t.value.trim()&&a()};try{o.start()}catch(a){y=null,e.classList.remove("on"),t.placeholder=i,g(e,t)}}(e.currentTarget,n,d),
+html:'<svg width="20" height="24" viewBox="0 0 22 26" aria-hidden="true"><rect x="6" y="1" width="10" height="15" rx="5" fill="currentColor"/><path d="M2 12c0 5 4 9 9 9s9-4 9-9M11 21v4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>'
+}),n,A("button",{class:"icon send","aria-label":"Send",onclick:d,
+html:'<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h12M10 4l6 6-6 6" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+})),A("p",{class:"hint"},a.ai?"Answer in your own words. AI fills in your profile as you talk.":"Tap the mic and speak, type, or tap an option.")),
+requestAnimationFrame((()=>window.scrollTo(0,document.body.scrollHeight)))}function z(){const e=h.profile,t=A("dl",{class:"kv"})
+;for(const a of["name","area","slots","activities","interests","goal","eating","mode","gender","age","buddyGender"])("interests"!==a||e.interests&&e.interests.length)&&t.append(A("dt",null,r[a]),A("dd",null,B(a,e[a])),"interests"===a?A("span"):A("button",{
+class:"link","aria-label":"Change "+r[a],onclick:()=>{h.mode="edit",h.field=a,x=[],"area"===a&&delete h.profile.city,M("ai",c[a].replace("{name}",e.name||"there")),F("chat")}
+},"Change"));const a=A("button",{class:"btn",onclick:async()=>{if(!v){v=!0,a.disabled=!0,a.textContent="Finding your buddy…";try{T(await f("find")),v=!1,
+b.proposal?F("proposal"):F("nomatch")}catch(e){E(e),a.disabled=!1,a.textContent="Find my buddy"}}}},"Find my buddy");W.append(A("section",{class:"card",
+style:"display:grid;gap:14px"},A("div",null,A("h2",null,"Your profile"),A("p",{class:"muted small"},"Nothing is shared until you and your match both accept.")),t,a,A("button",{
+class:"btn ghost",onclick:()=>{h.mode="update",h.field=null,M("ai",'Tell me what to change, for example "I\'m free on weekends too".'),F("chat")}},"Tell BUDI what to change")))}
+function V(){const e=b.proposal,t=e.other;if(!t)return void R();const a="accepted"===e.mine,n=async e=>{if(!v){v=!0;try{T(await f("respond",{accept:e})),v=!1,
+b.match?(C("You're buddies with "+t.name+"!"),R()):e?Y():(C("Passed. Tap Find my buddy to see someone else."),F("summary"))}catch(e){E(e)}}};W.append(A("section",{class:"card",
+style:"display:grid;gap:14px"},A("div",{class:"row",style:"justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap"
+},A("h2",null,e.incoming&&!a?"BUDI found you a buddy":"Your best match"),A("span",{class:"tag"+(t.demo?"":" real")},t.demo?"Demo profile":"Real person")),function(e,t){
+return[A("div",{class:"row",style:"align-items:center;gap:14px"},A("div",{class:"av","aria-hidden":"true"},(e.name||"?")[0]),A("div",{style:"min-width:0"
+},A("h3",null,e.name+", "+(i.age[e.age]||"")),A("p",{class:"muted small"},e.area+(null!=e.km?" · "+(e.km<1?"under 1 km":e.km+" km")+" away":"")),A("p",{class:"muted small"
+},i.mode[e.mode]||""))),null!=t?A("div",{class:"row",style:"align-items:baseline;gap:8px"},A("span",{class:"score"},t+"%"),A("span",{class:"muted small"
+},"match on lifestyle, location and schedule")):null]}(t,e.pct),A("div",null,A("b",null,"Why you match"),A("p",{style:"margin-top:4px"},e.why)),A("div",{class:"why"
+},(e.chips||[]).map((e=>A("span",null,e)))),t.interests&&t.interests.length?A("p",{class:"muted small"},"Into: "+t.interests.join(", ")):null,a?A("div",{class:"banner"
+},"You accepted. Waiting for "+t.name+" to accept. This updates by itself, so you can keep the page open."):A("p",{class:"note"
+},"You become buddies only when you both accept."),a?A("button",{class:"btn ghost",onclick:()=>n(!1)},"Cancel and look again"):A("div",{class:"row"},A("button",{class:"btn ghost",
+onclick:()=>n(!1)},"Not now"),A("button",{class:"btn",onclick:()=>n(!0)},"Accept")))),j(!0,6e3)}function q(){W.append(A("section",{class:"card",style:"display:grid;gap:12px"
+},A("h2",null,"No match yet"),A("p",null,"Nobody fits "+(h.profile.area||"your area")+" at your times yet. As more people join from this link, BUDI can match you with them."),A("p",{
+class:"muted small"},"To widen it, add more free times or pick a central area such as Marunouchi, Shibuya or Raffles Place."),A("button",{class:"btn",onclick:async()=>{try{
+T(await f("find")),b.proposal?F("proposal"):C("Still nobody. Try again in a bit.")}catch(e){E(e)}}},"Try again"),A("button",{class:"btn ghost",onclick:()=>F("summary")
+},"Change my profile")))}function K(){const e=b.match,t=e.buddy,a=Object.assign({days:[1,3],time:"12:30",activity:"walking",place:""},e.plan||{}),n=A("div",{class:"days",
+role:"group","aria-label":"Days"});d.forEach(((t,o)=>n.append(A("button",{class:"chip","aria-pressed":a.days.includes(o)?"true":"false",onclick:()=>{
+a.days=a.days.includes(o)?a.days.filter((e=>e!==o)):a.days.concat(o).sort(),e.plan=a,Y()}},t))));const o=A("input",{id:"ptime",type:"time",value:a.time}),l=A("select",{id:"pact"
+},Object.keys(i.activities).map((e=>A("option",{value:e,selected:e===a.activity||null},i.activities[e])))),s=A("input",{id:"pplace",type:"text",value:a.place||"",maxlength:"60"})
+;W.append(A("section",{class:"card",style:"display:grid;gap:14px"},A("div",{class:"row",style:"align-items:center;gap:12px"},A("div",{class:"av sm","aria-hidden":"true"
+},t.name[0]),A("div",null,A("h2",null,"Plan together"),A("p",{class:"muted small"
+},"A set time beats good intentions. "+t.name+" sees the same plan, and either of you can change it."))),A("div",{style:"display:grid;gap:6px"},A("span",{
+style:"font-size:14px;font-weight:600"},"Days"),n),A("div",{class:"grid2"},A("label",{class:"f"},"Time",o),A("label",{class:"f"},"Activity",l)),A("label",{class:"f"
+},"Where",s),A("button",{class:"btn",disabled:!a.days.length||null,onclick:async()=>{if(!v){v=!0;try{T(await f("plan",{plan:{days:a.days,time:o.value||a.time,activity:l.value,
+place:s.value.trim()}})),v=!1,h.planned=b.match&&b.match.since,m(),C("Plan saved. "+t.name+" can see it."),F("home")}catch(e){E(e)}}}},"Save our plan")))}function _(){
+const e=b.match,t=e.buddy,a=N(),n=O(),o=n[a],l=e.plan&&e.plan.days.includes(a),s=e.mine[o],r=a=>e.demo?function(e,t){const a=N()
+;return!(t>a)&&(t===a?(new Date).getHours()>=12:(t+e.name.length)%4!=0)}(t,a):"done"===e.theirs[n[a]],c=i.activities[e.plan&&e.plan.activity]||"Activity",p=A("div",{class:"week",
+role:"table","aria-label":"This week"});p.append(A("span"),...d.map((e=>A("span",{class:"d"},e)))),p.append(A("span",{class:"who"},"You"),...n.map(((t,n)=>A("span",{
+class:"dot"+("done"===e.mine[t]?" on":"skip"===e.mine[t]?" skip":"")+(n===a?" today":""),title:d[n]})))),p.append(A("span",{class:"who"},t.name),...n.map(((t,n)=>A("span",{
+class:"dot"+(r(n)?" on":e.demo||"skip"!==e.theirs[t]?"":" skip")+(n===a?" today":""),title:d[n]}))))
+;const u=n.filter(((t,a)=>"done"===e.mine[t]&&r(a))).length,y=r(a),g=e.received[o],w=async e=>{if(!v){v=!0;try{T(await f("checkin",{date:o,status:e})),v=!1,
+"done"===e&&C(t.name+" can see you checked in"),Y()}catch(e){E(e)}}};W.append(...[g?A("div",{class:"banner"
+},t.name+("cheer"===g?" sent you a cheer today.":" sent you a nudge: time for your check-in!")):null,A("section",{class:"card today",style:"display:grid;gap:12px"
+},A("div",null,A("p",{class:"muted small"},"Today, "+(new Date).toLocaleDateString(void 0,{weekday:"long",day:"numeric",month:"short"
+})),A("h2",null,l?c+" with "+t.name+", "+e.plan.time:"No plan today"),A("p",{class:"muted small"
+},l?e.plan.place||"":"Still counts: check in for any healthy move you make.")),s?A("div",{class:"row",style:"align-items:center;justify-content:space-between"
+},A("b",null,"done"===s?"Done for today. Nice.":"Rest day logged."),A("button",{class:"link",onclick:()=>w("clear")},"Undo")):A("div",{class:"row"},A("button",{class:"btn",
+onclick:()=>w("done")},"Done"),A("button",{class:"btn ghost",onclick:()=>w("skip")},"Not today"))),A("section",{class:"card",style:"display:grid;gap:12px"},A("div",{class:"row",
+style:"justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px"},A("h3",null,"This week together"),A("span",{class:"tag"+(e.demo?"":" real")
+},e.demo?t.name+" is a demo":"Real buddy")),A("div",{style:"overflow-x:auto"},p),A("div",{class:"row",style:"align-items:baseline;gap:10px"},A("span",{class:"big"
+},String(u)),A("span",{class:"muted"},1===u?"day you both checked in":"days you both checked in")),A("div",{class:"row",style:"align-items:center;gap:10px"},A("div",{class:"av sm",
+"aria-hidden":"true"},t.name[0]),A("p",{style:"flex:1;min-width:0"},A("b",null,t.name),y?" checked in today":" hasn't checked in yet"),A("button",{class:"btn sun",
+style:"width:auto;padding:10px 16px",disabled:!!e.sent[o]||null,onclick:async()=>{if(!v){v=!0;try{T(await f("nudge",{date:o,kind:y?"cheer":"nudge"})),v=!1,
+C((y?"Cheer":"Nudge")+" sent to "+t.name),Y()}catch(e){E(e)}}}},e.sent[o]?"Sent":y?"Send a cheer":"Send a nudge"))),A("section",{class:"card",style:"display:grid;gap:10px"
+},A("h3",null,"Your buddy plan"),A("p",null,(e.plan&&e.plan.days.map((e=>d[e])).join(", ")||"No days")+" at "+(e.plan&&e.plan.time)+" · "+c+(e.plan&&e.plan.place?" · "+e.plan.place:"")),A("div",{
+class:"row"},A("button",{class:"btn ghost",onclick:()=>F("plan")},"Change plan"),A("button",{class:"btn ghost",onclick:()=>{h.mode="update",h.field=null,
+M("ai",'What\'s changed? For example: "I now go to the gym at lunch".'),F("chat")}},"Talk to BUDI"))),A("div",{class:"row",
+style:"justify-content:space-between;flex-wrap:wrap;gap:12px"},A("button",{class:"link",onclick:async e=>{if(!e.target.dataset.armed)return e.target.dataset.armed=1,
+void(e.target.textContent="Tap again to end the match");try{T(await f("end")),h.planned=null,m(),C("Match ended."),F("summary")}catch(e){E(e)}}},"End match"),A("button",{
+class:"link",onclick:async e=>{if(!e.target.dataset.armed)return e.target.dataset.armed=1,void(e.target.textContent="Tap again to erase my profile");try{await f("reset"),h={
+chat:[],field:null,profile:{},mode:"setup"},m(),T(await f("state")),F("welcome")}catch(e){E(e)}}},"Start over")),e.demo?A("p",{class:"note"
+},t.name+" is a demo buddy, so their check-ins are simulated. With a real buddy, you see each other's real check-ins."):null].filter(Boolean)),j(!0,15e3)}function Q(){
+W.append(A("section",{class:"card"},A("p",{class:"muted"},"Loading team view…"))),n({admin:"list",key:a.key}).then((e=>{W.replaceChildren();const t=A("table",{class:"t"
+},A("tr",null,A("th",null,"Name"),A("th",null,"Area"),A("th",null,"Status"),A("th",null,"Joined")),e.users.map((e=>{
+return A("tr",null,A("td",null,e.name),A("td",null,e.area),A("td",null,e.status),A("td",null,(t=e.t,new Date(t).toLocaleString(void 0,{month:"short",day:"numeric",hour:"2-digit",
+minute:"2-digit"}))));var t}))),o=A("table",{class:"t"
+},A("tr",null,A("th",null,"Pair"),A("th",null,"Plan"),A("th",null,"Check-ins"),A("th",null,"Status")),e.matches.map((e=>A("tr",null,A("td",null,e.a+" + "+e.b),A("td",null,e.plan?e.plan.days.map((e=>d[e])).join(" ")+" "+e.plan.time:""),A("td",null,e.doneA+" / "+e.doneB),A("td",null,e.ended?"ended":"active"))))),i=A("button",{
+class:"btn ghost",style:"color:var(--danger)",onclick:()=>{if(!i.dataset.armed)return i.dataset.armed=1,void(i.textContent="Tap again to delete everyone's data");n({admin:"delete",
+key:a.key}).then((()=>Q())).catch((e=>C(e.message)))}},"Delete all data");W.append(A("section",{class:"card",style:"display:grid;gap:10px"},A("h2",null,"Team view"),A("div",{
+class:"net"
+},A("span",null,A("b",null,String(e.people))," profiles complete"),A("span",null,A("b",null,String(e.started))," started"),A("span",null,A("b",null,String(e.matches.filter((e=>!e.ended&&!e.demo)).length))," real pairs"))),A("section",{
+class:"card",style:"display:grid;gap:8px"},A("h3",null,"People"),A("div",{style:"overflow-x:auto"},t)),A("section",{class:"card",style:"display:grid;gap:8px"
+},A("h3",null,"Buddy pairs"),A("div",{style:"overflow-x:auto"},o)),A("button",{class:"btn ghost",onclick:()=>Q()},"Refresh"),i)})).catch((e=>{W.replaceChildren(A("section",{
+class:"card"},A("p",{class:"err"},String(e.message||e))))}))}"admin"===a.view?(w="admin",Y()):f("state").then((e=>{T(e),
+e.profile&&(h.profile=Object.assign({},h.profile,e.profile)),R()})).catch((e=>{W.replaceChildren(A("section",{class:"card"},A("p",{class:"err"
+},"BUDI couldn't load. Check your connection and reload.")))}))}();</script>
+<style>
+.vfab{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));width:60px;height:60px;border-radius:50%;border:0;background:var(--sun);color:var(--sun-ink);box-shadow:0 6px 20px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;z-index:30;cursor:pointer}
+.vfab.on{background:var(--danger);color:#fff;animation:pulse 1.2s ease-in-out infinite}
+.vpill{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(88px + env(safe-area-inset-bottom,0px));max-width:calc(100% - 32px);background:var(--card);color:var(--ink);border:1px solid var(--line);padding:8px 14px;border-radius:999px;font-size:14px;font-weight:600;z-index:31;box-shadow:0 4px 14px rgba(0,0,0,.14);text-align:center}
+.vfab[hidden],.vpill[hidden]{display:none}
+main{padding-bottom:72px}
+</style><script>!function(){var e=window.SpeechRecognition||window.webkitSpeechRecognition;if(e){
+var t=!1,n=null,i=null,o=null,a=null,r='<svg width="22" height="26" viewBox="0 0 22 26" aria-hidden="true"><rect x="6" y="1" width="10" height="15" rx="5" fill="currentColor"/><path d="M2 12c0 5 4 9 9 9s9-4 9-9M11 21v4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>'
+;document.addEventListener("click",(function(e){e.target&&e.target.closest&&e.target.closest(".icon.mic")&&(e.stopPropagation(),e.preventDefault(),p())}),!0);var l=0
+;"loading"===document.readyState?document.addEventListener("DOMContentLoaded",T):T()}function d(e){return document.querySelector(e)}function u(e){
+return Array.prototype.slice.call(document.querySelectorAll(e))}function c(e){return String(e||"").toLowerCase().replace(/[^a-z0-9: ]+/g," ").replace(/\s+/g," ").trim()}
+function s(e,t){e=" "+e+" ";for(var n=0;n<t.length;n++)if(e.indexOf(" "+t[n]+" ")>=0)return!0;return!1}function g(e){return e=c(e),u("main button").filter((function(t){
+return!t.disabled&&c(t.textContent)===e}))[0]||null}function f(e){var t=g(e);return!!t&&(t.click(),y("✓ "+t.textContent.trim()),!0)}function h(){
+i||((i=document.createElement("div")).className="vpill",i.setAttribute("role","status"),i.hidden=!0,document.body.appendChild(i)),
+o||((o=document.createElement("button")).className="vfab",o.type="button",o.setAttribute("aria-label","Talk to BUDI"),o.innerHTML=r,o.addEventListener("click",p),
+document.body.appendChild(o))}function y(e,n){h(),i.textContent=e,i.hidden=!1,clearTimeout(y.t),n||(y.t=setTimeout((function(){t?i.textContent="Listening… just talk":i.hidden=!0
+}),2500))}function m(){h(),o.hidden=!!d(".compose"),o.classList.toggle("on",t),o.setAttribute("aria-label",t?"Stop talking":"Talk to BUDI"),u(".icon.mic").forEach((function(e){
+e.classList.toggle("on",t),e.setAttribute("aria-label",t?"Stop talking":"Speak")}));var e=d("#msg");e&&(e.placeholder=t?"Listening… just talk":"Type or speak your answer")
+;var n=document.getElementById("vhint");n&&t&&n.remove()}function p(){t?k():(t=!0,m(),y("Listening… just talk. Tap the mic again to stop."),v())}function k(){if(t=!1,
+clearTimeout(a),n){var e=n;n=null,e.onend=null;try{e.stop()}catch(e){}}m(),i&&(i.hidden=!0)}function v(){if(t&&!n){var i;try{i=new e}catch(e){return void k()}n=i,i.lang="en-US",
+i.continuous=!0,i.interimResults=!0,i.onresult=function(e){for(var t="",n=e.resultIndex;n<e.results.length;n++){var i=e.results[n];if(i.isFinal){
+var o=String(i[0].transcript||"").trim();o&&b(o)}else t+=i[0].transcript}t.trim()&&y("“"+t.trim()+"”",!0)},i.onerror=function(e){
+"not-allowed"!==e.error&&"service-not-allowed"!==e.error&&"audio-capture"!==e.error||(k(),y("Microphone is blocked. Allow it for this page, or type."))},i.onend=function(){
+n===i&&(n=null),t&&(a=setTimeout((function(){v(),!n&&t&&(t=!1,m(),y("Tap the mic to keep talking"))}),250))};try{i.start()}catch(e){n=null,t=!1,m(),y("Tap the mic to keep talking")
+}}}function w(e){var t=d("#msg"),n=d(".icon.send");return!(!t||!n)&&(t.value=e,n.click(),setTimeout(m,60),!0)}function b(e){var t=c(e);if(t&&(y("“"+e+"”"),!w(e))){
+var n=g("Start")||g("Continue")
+;if(n)return n.click(),void((t.split(" ").length>2||!s(t,["start","begin","continue","yes","ok","okay","hi","hello","hey","go","let s go","lets go"]))&&setTimeout((function(){w(e)
+}),150));if(g("Accept")){if(s(t,["no","not now","pass","skip","next","someone else","nope","decline","no thanks"]))return f("Not now")
+;if(s(t,["accept","yes","yeah","yep","sure","ok","okay","great","sounds good","let s do it","lets do it","deal","go ahead","perfect"]))return f("Accept")}
+if(g("Cancel and look again")&&s(t,["cancel","look again","someone else","no"]))return f("Cancel and look again");if(g("Find my buddy")){
+if(s(t,["change","update","edit","wrong"]))return f("Tell BUDI what to change"),void(t.split(" ").length>3&&setTimeout((function(){w(e)}),150))
+;if(s(t,["find","match","search","go","yes","buddy","ok","okay","looks good","correct","right"]))return f("Find my buddy")}if(g("Try again")){
+if(s(t,["change","update","edit"]))return f("Change my profile");if(s(t,["try","again","retry","search","find"]))return f("Try again")}if(g("Save our plan"))return function(e,t){
+var n,i={monday:0,mon:0,tuesday:1,tue:1,tues:1,wednesday:2,wed:2,thursday:3,thu:3,thurs:3,friday:4,fri:4,saturday:5,sat:5,sunday:6,sun:6},o=[],a=!1
+;for(n in i)s(t,[n,n+"s"])&&o.indexOf(i[n])<0&&o.push(i[n]);s(t,["weekdays","every weekday"])&&(o=[0,1,2,3,4]),s(t,["weekend","weekends"])&&(o.indexOf(5)<0&&o.push(5),
+o.indexOf(6)<0&&o.push(6)),s(t,["every day","everyday","daily"])&&(o=[0,1,2,3,4,5,6]),o.length&&(a=!0,["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].forEach((function(e,t){
+var n=u(".days .chip").filter((function(t){return t.textContent===e}))[0];n&&"true"===n.getAttribute("aria-pressed")!=o.indexOf(t)>=0&&n.click()})))
+;var r,l=null,c=t.match(/\b(\d{1,2})(?::(\d{2})|\s(\d{2})(?=\s*(?:a ?m|p ?m)\b))?\s*(a ?m|p ?m|o clock)?\b/);if(c&&+c[1]>=1&&+c[1]<=23){
+var g=+c[1],h=c[2]||c[3]||"00",m=(c[4]||"").replace(/ /g,"");"pm"===m&&g<12&&(g+=12),"am"===m&&12===g&&(g=0),!m&&g<7&&(g+=12),l=((r=g)<10?"0":"")+r+":"+h
+}else s(t,["noon","midday"])?l="12:00":s(t,["lunch","lunchtime"])?l="12:30":s(t,["morning"])?l="07:30":s(t,["evening","after work","night"])&&(l="18:30")
+;l&&d("#ptime")&&(d("#ptime").value=l,a=!0)
+;for(var p=[["walking",["walk","walking","stroll","hike"]],["running",["run","running","jog","jogging"]],["gym",["gym","weights","workout"]],["yoga",["yoga","pilates","stretching"]],["cycling",["cycle","cycling","bike","biking","ride"]],["swimming",["swim","swimming"]]],k=0;k<p.length;k++)if(s(t,p[k][1])&&d("#pact")){
+d("#pact").value=p[k][0],a=!0;break}var v=e.match(/\b(?:at|in|near|by)\s+(?:the\s+)?([A-Za-z][A-Za-z'\- ]{2,40}?)\s*(?:$|[,.!?]|\s(?:on|at|every|and|then|please|save)\b)/i)
+;if(v&&!/^(monday|tuesday|wednesday|thursday|friday|saturday|sunday|weekends?|weekdays?|lunch|noon|midday|morning|evening|night|the morning|the evening|work)\b/i.test(v[1])&&d("#pplace")&&(d("#pplace").value=v[1].trim(),
+a=!0),s(t,["save","confirm","yes","ok","okay","sounds good","perfect","great","that s it","done","looks good"]))return f("Save our plan")
+;y(a?"Got it. Say “save” to confirm the plan.":"Tell me days, time and activity, e.g. “Monday and Thursday at 7 pm, running”.")}(e,t);if(g("Change plan")){
+if(s(t,["undo"]))return f("Undo")
+;if(s(t,["not today","rest","skip","can t","cant","cannot","busy","no"]))return f("Not today")||y("Today is already logged. Say “undo” to change it.")
+;if(s(t,["done","did it","finished","completed","checked in","check in","yes","walked","ran","went","complete"]))return f("Done")||y("Already checked in today 👍")
+;if(s(t,["nudge","remind","poke"]))return f("Send a nudge")||y("You've already sent one today.")
+;if(s(t,["cheer","well done","great job","congrats","congratulations","good job"]))return f("Send a cheer")||y("You've already sent one today.")
+;if(s(t,["change plan","new plan","reschedule","plan","change the plan"]))return f("Change plan");if(s(t,["talk","update","profile","change"]))return f("Talk to BUDI"),
+void(t.split(" ").length>3&&setTimeout((function(){w(e)}),150))}for(var i=u("main button").filter((function(e){return!e.disabled&&c(e.textContent).length>1})),o=0;o<i.length;o++){
+var a=c(i[o].textContent);if(t===a||(" "+t+" ").indexOf(" "+a+" ")>=0)return i[o].click(),void y("✓ "+i[o].textContent.trim())}
+y("Didn't catch that. Try “accept”, “find my buddy” or “done”.")}}function T(){h(),m(),new MutationObserver((function(){l||(l=1,requestAnimationFrame((function(){l=0,m()})))
+})).observe(document.getElementById("main"),{childList:!0,subtree:!0})}}();</script>
+</body></html>
