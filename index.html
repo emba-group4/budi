@@ -305,11 +305,11 @@ document.body.appendChild(o))}function y(e,n){h(),i.textContent=e,i.hidden=!1,cl
 }),2500))}function m(){h(),o.hidden=!!d(".compose"),o.classList.toggle("on",t),o.setAttribute("aria-label",t?"Stop talking":"Talk to BUDI"),u(".icon.mic").forEach((function(e){
 e.classList.toggle("on",t),e.setAttribute("aria-label",t?"Stop talking":"Speak")}));var e=d("#msg");e&&(e.placeholder=t?"Listening… just talk":"Type or speak your answer")
 ;var n=document.getElementById("vhint");n&&t&&n.remove()}function p(){t?k():(t=!0,m(),y("Listening… just talk. Tap the mic again to stop."),v())}function k(){if(t=!1,
-clearTimeout(a),n){var e=n;n=null,e.onend=null;try{e.stop()}catch(e){}}m(),i&&(i.hidden=!0)}function v(){if(t&&!n){var i;try{i=new e}catch(e){return void k()}n=i,i.lang="en-US",
+clearTimeout(a),n){var e=n;n=null,e.onend=null;try{e.stop()}catch(e){}}m(),i&&(i.hidden=!0)}function v(){if(t&&!n){var i;try{i=new e}catch(e){return void k()}n=i,i.__auto=!!window.__ba,i.lang="en-US",
 i.continuous=!0,i.interimResults=!0,i.onresult=function(e){for(var t="",n=e.resultIndex;n<e.results.length;n++){var i=e.results[n];if(i.isFinal){
 var o=String(i[0].transcript||"").trim();o&&b(o)}else t+=i[0].transcript}t.trim()&&y("“"+t.trim()+"”",!0)},i.onerror=function(e){
-"not-allowed"!==e.error&&"service-not-allowed"!==e.error&&"audio-capture"!==e.error||(k(),y("Microphone is blocked. Allow it for this page, or type."))},i.onend=function(){
-n===i&&(n=null),t&&(a=setTimeout((function(){v(),!n&&t&&(t=!1,m(),y("Tap the mic to keep talking"))}),250))};try{i.start()}catch(e){n=null,t=!1,m(),y("Tap the mic to keep talking")
+var q=i.__auto&&("not-allowed"===e.error||"service-not-allowed"===e.error)?"Tap the mic to keep talking":{"not-allowed":"Mic blocked for this site. Tap the page menu left of the address → Website Settings → Microphone → Allow, then reload.","service-not-allowed":"Speech recognition is off. iPhone Settings → General → Keyboard → turn on Enable Dictation, then reload.","audio-capture":"No microphone available. Close other apps using it, then try again."}[e.error];q&&(k(),y(q,!0))},i.onend=function(){
+n===i&&(n=null),t&&(a=setTimeout((function(){window.__ba=1,v(),window.__ba=0,!n&&t&&(t=!1,m(),y("Tap the mic to keep talking"))}),250))};try{i.start()}catch(e){n=null,t=!1,m(),y("Tap the mic to keep talking")
 }}}function w(e){var t=d("#msg"),n=d(".icon.send");return!(!t||!n)&&(t.value=e,n.click(),setTimeout(m,60),!0)}function b(e){var t=c(e);if(t&&(y("“"+e+"”"),!w(e))){
 var n=g("Start")||g("Continue")
 ;if(n)return n.click(),void((t.split(" ").length>2||!s(t,["start","begin","continue","yes","ok","okay","hi","hello","hey","go","let s go","lets go"]))&&setTimeout((function(){w(e)
