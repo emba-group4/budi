@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>BUDI Walking Circles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: a park-path page. Two-column hero with a walking scene, then a comic, an excuse-buster toy, a match demo, merits, and a closing CTA band. */
+:root{
+  --forest:#14302A; --leaf:#1E6B4A; --mint:#E2EEE6; --paper:#F4F7F3; --card:#FBFBF8;
+  --sun:#E9A93A; --clay:#A8402D; --muted:#4F625A; --line:#D6E1D9; --sky:#DCEFE4;
+  --display:'Bricolage Grotesque','Avenir Next','Segoe UI',system-ui,sans-serif;
+  --body:'Figtree','Segoe UI',system-ui,-apple-system,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--forest);font-family:var(--body);font-size:18px;line-height:1.55;margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);line-height:1.05;text-wrap:balance;margin:0}
+h1{font-size:clamp(44px,6.2vw,84px);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(32px,4vw,52px);font-weight:800;letter-spacing:-.01em}
+h3{font-size:22px;font-weight:700}
+p{margin:0}
+a{color:inherit}
+.eyebrow{font-size:14px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--leaf)}
+.btn{display:inline-flex;align-items:center;gap:10px;font:600 18px/1 var(--body);padding:18px 26px;border-radius:999px;text-decoration:none;border:2px solid var(--forest);cursor:pointer;transition:transform .15s ease, box-shadow .15s ease}
+.btn:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+.btn-primary{background:var(--forest);color:var(--paper);box-shadow:4px 4px 0 var(--sun)}
+.btn-primary:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--sun)}
+.btn-ghost{background:transparent;color:var(--forest)}
+.btn-ghost:hover{background:var(--mint)}
+nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:22px}
+.logo{display:flex;align-items:center;gap:10px;font:800 26px/1 var(--display);text-decoration:none}
+.dots{position:relative;width:40px;height:24px}
+.dots i{position:absolute;top:0;width:24px;height:24px;border-radius:50%}
+.dots i:first-child{left:0;background:var(--leaf)}
+.dots i:last-child{left:15px;background:var(--sun);border:3px solid var(--paper)}
+.navlinks{display:flex;gap:22px;align-items:center;font-weight:600;font-size:16px}
+.navlinks a{text-decoration:none}
+.navlinks a:hover{text-decoration:underline;text-underline-offset:4px}
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center;padding-block:24px 64px}
+.hero-copy{display:flex;flex-direction:column;gap:24px;min-width:0}
+.hero-copy .lede{font-size:21px;color:var(--muted);max-width:34ch}
+.hl{background:linear-gradient(transparent 62%,var(--sun) 62%);padding:0 4px}
+.cta-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.tiny{font-size:14px;color:var(--muted)}
+.scene{position:relative;background:var(--sky);border:2px solid var(--forest);border-radius:28px;overflow:hidden;aspect-ratio:5/4;max-width:100%;box-shadow:10px 10px 0 var(--leaf)}
+.scene svg{display:block;width:100%;height:100%}
+.walkers{animation:stroll 9s ease-in-out infinite alternate}
+.bob{animation:bob .6s ease-in-out infinite alternate}
+.bob2{animation:bob .6s ease-in-out .3s infinite alternate}
+.cloud{animation:drift 30s linear infinite}
+@keyframes stroll{from{transform:translateX(-40px)}to{transform:translateX(70px)}}
+@keyframes bob{from{transform:translateY(0)}to{transform:translateY(-5px)}}
+@keyframes drift{from{transform:translateX(-120px)}to{transform:translateX(560px)}}
+.plan-card{position:absolute;right:18px;top:18px;background:var(--card);border:2px solid var(--forest);border-radius:16px;padding:12px 16px;font-size:15px;line-height:1.35;box-shadow:4px 4px 0 var(--sun);transform:rotate(2deg)}
+.plan-card b{font-family:var(--display);font-size:17px}
+.plan-card .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--leaf)}
+section{padding-block:72px}
+.band{background:var(--card);border-block:2px solid var(--forest)}
+.sec-head{display:flex;flex-direction:column;gap:12px;max-width:760px;margin-bottom:36px}
+.sec-head p{font-size:20px;color:var(--muted)}
+.comic{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.panel{background:var(--paper);border:2px solid var(--forest);border-radius:20px;padding:12px;display:flex;flex-direction:column;gap:12px;min-width:0;transition:transform .2s ease}
+.panel:nth-child(odd){transform:rotate(-1deg)}
+.panel:nth-child(even){transform:rotate(1deg)}
+.panel:hover{transform:rotate(0) scale(1.02)}
+.panel svg{width:100%;height:auto;display:block;border-radius:12px}
+.panel p{font-size:16px;padding:0 4px 4px}
+.panel .n{font:800 15px/1 var(--display);color:var(--leaf)}
+.buster{display:grid;grid-template-columns:1fr 1.1fr;gap:40px;align-items:start}
+.chips{display:flex;flex-wrap:wrap;gap:12px}
+.chip{font:600 17px/1.2 var(--body);padding:14px 18px;border-radius:999px;border:2px solid var(--forest);background:var(--card);color:var(--forest);cursor:pointer;transition:transform .12s ease, background .12s ease}
+.chip:hover{transform:translateY(-2px)}
+.chip[aria-pressed="true"]{background:var(--forest);color:var(--paper)}
+.reply{display:flex;gap:16px;align-items:flex-start;background:var(--forest);color:var(--paper);border-radius:24px;padding:28px;min-height:190px}
+.reply .avatar{flex:none;width:56px;height:56px;border-radius:50%;background:var(--sun);display:grid;place-items:center;font:800 18px/1 var(--display);color:var(--forest)}
+.reply .said{font-size:15px;color:#BFD8CC;margin-bottom:6px}
+.reply .txt{font:700 26px/1.25 var(--display);min-width:0}
+.pop{animation:pop .35s ease}
+@keyframes pop{from{transform:scale(.96);opacity:.4}to{transform:scale(1);opacity:1}}
+.matcher{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.form{display:flex;flex-direction:column;gap:18px;background:var(--card);border:2px solid var(--forest);border-radius:24px;padding:28px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-weight:700;font-size:15px}
+select{font:500 18px/1.2 var(--body);padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--paper);color:var(--forest)}
+.result{position:relative;min-height:320px;display:grid;place-items:center}
+.ticket{width:100%;max-width:440px;background:var(--card);border:2px solid var(--forest);border-radius:24px;padding:26px;box-shadow:8px 8px 0 var(--sun);display:flex;flex-direction:column;gap:14px}
+.ticket .row{display:flex;gap:14px;align-items:center}
+.face{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font:800 22px/1 var(--display);color:var(--forest)}
+.ticket .why{display:flex;flex-wrap:wrap;gap:8px}
+.ticket .why span{font-size:14px;font-weight:600;background:var(--mint);color:var(--leaf);padding:6px 10px;border-radius:999px}
+.ticket .ex{font-size:13px;color:var(--muted)}
+.radar{width:200px;height:200px;border-radius:50%;border:2px dashed var(--leaf);position:relative;display:grid;place-items:center}
+.radar::after{content:"";position:absolute;inset:-2px;border-radius:50%;border:4px solid transparent;border-top-color:var(--sun);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.merits{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.merit{background:var(--card);border:2px solid var(--forest);border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.merit svg{width:100%;height:auto;border-radius:12px}
+.merit p{font-size:16px;color:var(--muted)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.way{border:2px solid var(--forest);border-radius:24px;padding:28px;display:flex;flex-direction:column;gap:12px}
+.way.dark{background:var(--forest);color:var(--paper)}
+.way.dark p{color:#BFD8CC}
+.soon{align-self:flex-start;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--sun);color:var(--forest);padding:5px 10px;border-radius:999px}
+.final{background:var(--leaf);color:var(--paper)}
+.final .grid{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:center}
+.final h2{color:var(--paper)}
+.final .lede{font-size:20px;color:#D8EADF;max-width:44ch}
+.final .btn-primary{background:var(--paper);color:var(--forest);border-color:var(--paper)}
+.qr{background:var(--card);color:var(--forest);border-radius:24px;padding:22px;display:flex;flex-direction:column;align-items:center;gap:10px;justify-self:end;width:min(300px,100%)}
+.qr img{width:200px;height:200px;image-rendering:pixelated}
+.qr p{font-size:15px;text-align:center}
+footer{padding-block:28px;font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
+@media (max-width:900px){
+  .hero,.buster,.matcher,.final .grid,.two{grid-template-columns:1fr}
+  .comic,.merits{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .navlinks a:not(.btn){display:none}
+  .qr{justify-self:start}
+}
+@media (max-width:520px){
+  .comic,.merits{grid-template-columns:1fr}
+  .plan-card{font-size:13px;right:10px;top:10px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+</head>
+<body>
+<header class="wrap">
+  <nav aria-label="Main">
+    <a class="logo" href="#top" aria-label="BUDI home"><span class="dots" aria-hidden="true"><i></i><i></i></span>BUDI</a>
+    <div class="navlinks">
+      <a href="#how">How it works</a>
+      <a href="#excuses">Excuse buster</a>
+      <a href="#match">Try a match</a>
+      <a class="btn btn-primary" style="padding:12px 18px;font-size:16px" href="https://emba-group4.github.io/budi/" target="_blank" rel="noopener">Join the pilot</a>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Singapore walking pilot · free</p>
+      <h1>Find a walking circle that <span class="hl">fits your week.</span></h1>
+      <p class="lede">Talk to BUDI for two minutes. We match you with real people nearby who are free when you are, so you keep each other going.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://emba-group4.github.io/budi/" target="_blank" rel="noopener">Join the Singapore pilot →</a>
+        <a class="btn btn-ghost" href="#how">See how it works</a>
+      </div>
+      <p class="tiny">No login. Your buddy sees your first name, age range and neighbourhood, never your contact details.</p>
+    </div>
+    <div class="scene" role="img" aria-label="Two people walking together through a park at lunchtime, with an example plan card for Wednesday 12:30">
+      <svg viewBox="0 0 500 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="500" height="400" fill="#DCEFE4"/>
+        <circle cx="400" cy="80" r="44" fill="#E9A93A"/>
+        <g class="cloud"><ellipse cx="60" cy="70" rx="44" ry="16" fill="#FBFBF8"/><ellipse cx="84" cy="60" rx="26" ry="16" fill="#FBFBF8"/></g>
+        <g fill="#BFD8CC"><rect x="20" y="150" width="46" height="130"/><rect x="72" y="120" width="34" height="160"/><rect x="112" y="170" width="50" height="110"/><rect x="330" y="140" width="40" height="140"/><rect x="376" y="180" width="56" height="100"/><rect x="438" y="130" width="40" height="150"/></g>
+        <path d="M0 280 C120 250 360 300 500 262 L500 400 L0 400 Z" fill="#4FB585"/>
+        <path d="M-10 400 C120 330 330 320 520 296" stroke="#F4F7F3" stroke-width="48" fill="none" stroke-linecap="round"/>
+        <g><rect x="58" y="250" width="12" height="60" fill="#6E5842"/><circle cx="64" cy="232" r="36" fill="#1E6B4A"/></g>
+        <g><rect x="436" y="226" width="12" height="60" fill="#6E5842"/><circle cx="442" cy="206" r="32" fill="#1E6B4A"/></g>
+        <g class="walkers">
+          <g class="bob">
+            <path d="M206 300 L196 346 M206 300 L222 342" stroke="#14302A" stroke-width="12" stroke-linecap="round"/>
+            <rect x="188" y="236" width="38" height="70" rx="16" fill="#1E6B4A"/>
+            <path d="M192 254 L178 286 M222 254 L236 282" stroke="#F2C9A0" stroke-width="10" stroke-linecap="round"/>
+            <circle cx="207" cy="214" r="22" fill="#F2C9A0"/>
+            <path d="M185 216 C183 188 231 186 229 216 C225 200 189 198 185 216 Z" fill="#2E2A26"/>
+            <circle cx="201" cy="214" r="2.5" fill="#14302A"/><circle cx="215" cy="214" r="2.5" fill="#14302A"/>
+            <path d="M200 223 q7 6 14 0" stroke="#14302A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          </g>
+          <g class="bob2">
+            <path d="M282 296 L270 344 M282 296 L300 340" stroke="#14302A" stroke-width="12" stroke-linecap="round"/>
+            <rect x="262" y="228" width="42" height="72" rx="16" fill="#E9A93A"/>
+            <path d="M266 246 L254 280 M300 246 L314 276" stroke="#E0B088" stroke-width="10" stroke-linecap="round"/>
+            <circle cx="283" cy="204" r="22" fill="#E0B088"/>
+            <path d="M261 200 C263 178 303 178 305 200 C297 190 269 190 261 200 Z" fill="#14302A"/>
+            <circle cx="276" cy="206" r="2.5" fill="#14302A"/><circle cx="290" cy="206" r="2.5" fill="#14302A"/>
+            <path d="M276 214 q7 6 14 0" stroke="#14302A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          </g>
+        </g>
+      </svg>
+      <div class="plan-card"><span class="tag">Example plan</span><br><b>Wed and Fri · 12:30</b><br>Fort Canning Park · 30 min</div>
+    </div>
+  </div>
+
+  <section class="band" id="how">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">How it works, in four frames</p>
+        <h2>Meet Mei. She knows walking helps. She can’t keep it up alone.</h2>
+      </div>
+      <div class="comic">
+        <figure class="panel" style="margin:0"><svg role="img" aria-label="Mei at her desk late at night, laptop open, phone full of ignored reminders, clock past nine" viewBox="0 0 360 280" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" rx="16" fill="#DCE8F0"/>
+<rect x="24" y="24" width="96" height="76" rx="6" fill="#14302A"/>
+<path d="M88 44 a16 16 0 1 0 14 24 a12 12 0 1 1 -14 -24 Z" fill="#E9A93A"/>
+<circle cx="44" cy="44" r="2" fill="#F4F7F3"/><circle cx="60" cy="80" r="2" fill="#F4F7F3"/>
+<circle cx="300" cy="56" r="30" fill="#FBFBF8" stroke="#14302A" stroke-width="4"/>
+<line x1="300" y1="56" x2="300" y2="36" stroke="#14302A" stroke-width="4" stroke-linecap="round"/>
+<line x1="300" y1="56" x2="284" y2="62" stroke="#14302A" stroke-width="4" stroke-linecap="round"/>
+<rect x="96" y="138" width="64" height="80" rx="20" fill="#1E6B4A"/>
+<circle cx="128" cy="112" r="26" fill="#F2C9A0"/>
+<path d="M100 114 C98 82 158 80 156 114 C152 98 108 96 100 114 Z" fill="#2E2A26"/>
+<path d="M114 112 h10 M134 112 h10" stroke="#14302A" stroke-width="3" stroke-linecap="round"/>
+<path d="M120 126 q8 -5 16 0" stroke="#14302A" stroke-width="3" fill="none" stroke-linecap="round"/>
+<rect x="190" y="136" width="96" height="60" rx="6" fill="#14302A"/>
+<rect x="198" y="144" width="80" height="44" rx="3" fill="#5A6D65"/>
+<rect x="206" y="152" width="50" height="5" rx="2.5" fill="#BFD8CC"/><rect x="206" y="162" width="62" height="5" rx="2.5" fill="#BFD8CC"/><rect x="206" y="172" width="40" height="5" rx="2.5" fill="#BFD8CC"/>
+<rect x="20" y="196" width="320" height="14" rx="4" fill="#8A7055"/>
+<rect x="40" y="210" width="10" height="56" fill="#6E5842"/><rect x="310" y="210" width="10" height="56" fill="#6E5842"/>
+<rect x="44" y="160" width="22" height="36" rx="5" fill="#14302A"/>
+<circle cx="70" cy="152" r="9" fill="#A8402D"/><circle cx="56" cy="138" r="9" fill="#A8402D"/><circle cx="76" cy="130" r="9" fill="#A8402D"/>
+<rect x="69" y="147" width="2" height="6" fill="#FBFBF8"/><rect x="55" y="133" width="2" height="6" fill="#FBFBF8"/><rect x="75" y="125" width="2" height="6" fill="#FBFBF8"/>
+</svg><p><span class="n">1</span>  Mei, 48. Busy job, good intentions. Her walks keep slipping.</p></figure>
+        <figure class="panel" style="margin:0"><svg role="img" aria-label="Mei talking to the BUDI app on her phone, sound waves coming from her, the app listening with a microphone" viewBox="0 0 360 280" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" rx="16" fill="#E2EEE6"/>
+<rect x="50" y="170" width="76" height="110" rx="26" fill="#1E6B4A"/>
+<circle cx="88" cy="138" r="30" fill="#F2C9A0"/>
+<path d="M56 140 C54 102 124 100 120 140 C116 120 64 118 56 140 Z" fill="#2E2A26"/>
+<circle cx="80" cy="136" r="3" fill="#14302A"/><circle cx="98" cy="136" r="3" fill="#14302A"/>
+<ellipse cx="90" cy="152" rx="7" ry="6" fill="#A8402D"/>
+<path d="M126 92 q12 18 0 36 M140 82 q20 28 0 56 M154 72 q28 38 0 76" stroke="#E9A93A" stroke-width="5" fill="none" stroke-linecap="round"/>
+<rect x="196" y="26" width="128" height="232" rx="20" fill="#14302A"/>
+<rect x="206" y="40" width="108" height="204" rx="10" fill="#F4F7F3"/>
+<rect x="206" y="40" width="108" height="30" rx="10" fill="#1E6B4A"/><rect x="206" y="58" width="108" height="12" fill="#1E6B4A"/>
+<circle cx="222" cy="55" r="6" fill="#F4F7F3"/><circle cx="230" cy="55" r="6" fill="#E9A93A"/>
+<rect x="216" y="82" width="70" height="22" rx="10" fill="#E2EEE6"/>
+<rect x="236" y="112" width="70" height="30" rx="10" fill="#1E6B4A"/>
+<rect x="216" y="150" width="56" height="22" rx="10" fill="#E2EEE6"/>
+<circle cx="260" cy="214" r="20" fill="#E9A93A"/>
+<rect x="254" y="202" width="12" height="20" rx="6" fill="#14302A"/>
+<path d="M248 214 a12 12 0 0 0 24 0" stroke="#14302A" stroke-width="3" fill="none" stroke-linecap="round"/>
+<path d="M150 190 C170 200 180 210 196 214" stroke="#F2C9A0" stroke-width="16" fill="none" stroke-linecap="round"/>
+</svg><p><span class="n">2</span>  She talks to BUDI for two minutes: where she works, when she’s free.</p></figure>
+        <figure class="panel" style="margin:0"><svg role="img" aria-label="A neighbourhood map with two pins one kilometre apart, Mei and Ken, joined by a dotted path and a green tick" viewBox="0 0 360 280" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" rx="16" fill="#F4F7F3"/>
+<path d="M0 90 H360 M0 190 H360 M110 0 V280 M250 0 V280" stroke="#D6E1D9" stroke-width="16"/>
+<path d="M0 140 H360 M180 0 V280" stroke="#E7EEE9" stroke-width="8"/>
+<ellipse cx="185" cy="236" rx="56" ry="30" fill="#BFD8CC"/>
+<circle cx="168" cy="230" r="10" fill="#4FB585"/><circle cx="196" cy="240" r="12" fill="#4FB585"/><circle cx="214" cy="226" r="8" fill="#4FB585"/>
+<path d="M92 176 C140 120 210 180 262 102" stroke="#14302A" stroke-width="4" stroke-dasharray="4 10" stroke-linecap="round" fill="none"/>
+<path d="M92 196 C66 168 58 156 58 140 a34 34 0 0 1 68 0 C126 156 118 168 92 196 Z" fill="#1E6B4A"/>
+<circle cx="92" cy="138" r="22" fill="#F2C9A0"/>
+<path d="M70 140 C68 112 116 110 114 140 C110 124 74 122 70 140 Z" fill="#2E2A26"/>
+<circle cx="85" cy="140" r="2.5" fill="#14302A"/><circle cx="99" cy="140" r="2.5" fill="#14302A"/>
+<path d="M86 148 q6 5 12 0" stroke="#14302A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+<path d="M262 122 C236 94 228 82 228 66 a34 34 0 0 1 68 0 C296 82 288 94 262 122 Z" fill="#E9A93A"/>
+<circle cx="262" cy="64" r="22" fill="#E0B088"/>
+<path d="M240 60 C242 38 282 38 284 60 C276 50 248 50 240 60 Z" fill="#14302A"/>
+<circle cx="255" cy="66" r="2.5" fill="#14302A"/><circle cx="269" cy="66" r="2.5" fill="#14302A"/>
+<path d="M256 74 q6 5 12 0" stroke="#14302A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+<circle cx="176" cy="146" r="22" fill="#1E6B4A" stroke="#FBFBF8" stroke-width="4"/>
+<path d="M165 146 l8 8 l14 -15" stroke="#F4F7F3" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg><p><span class="n">3</span>  BUDI finds Ken, 1 km away, free Wed and Fri at lunch. Both accept.</p></figure>
+        <figure class="panel" style="margin:0"><svg role="img" aria-label="Mei and Ken walking side by side in a sunny park, each with a tick above them for checking in" viewBox="0 0 360 280" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" rx="16" fill="#DCEFE4"/>
+<circle cx="306" cy="48" r="26" fill="#E9A93A"/>
+<rect x="34" y="120" width="10" height="70" fill="#6E5842"/><circle cx="39" cy="104" r="34" fill="#4FB585"/>
+<rect x="316" y="132" width="10" height="60" fill="#6E5842"/><circle cx="321" cy="118" r="28" fill="#4FB585"/>
+<path d="M0 230 C90 196 260 214 360 196 L360 280 L0 280 Z" fill="#BFD8CC"/>
+<path d="M60 280 C120 236 230 230 300 212" stroke="#F4F7F3" stroke-width="26" fill="none" stroke-linecap="round"/>
+<path d="M136 186 L124 236 M136 186 L152 232" stroke="#14302A" stroke-width="12" stroke-linecap="round"/>
+<rect x="118" y="122" width="38" height="68" rx="16" fill="#1E6B4A"/>
+<path d="M122 140 L106 172 M152 140 L164 168" stroke="#F2C9A0" stroke-width="10" stroke-linecap="round"/>
+<circle cx="137" cy="100" r="22" fill="#F2C9A0"/>
+<path d="M115 102 C113 74 161 72 159 102 C155 86 119 84 115 102 Z" fill="#2E2A26"/>
+<circle cx="131" cy="100" r="2.5" fill="#14302A"/><circle cx="145" cy="100" r="2.5" fill="#14302A"/>
+<path d="M130 109 q7 6 14 0" stroke="#14302A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+<path d="M216 180 L204 230 M216 180 L234 226" stroke="#14302A" stroke-width="12" stroke-linecap="round"/>
+<rect x="196" y="112" width="42" height="72" rx="16" fill="#E9A93A"/>
+<path d="M200 130 L188 164 M234 130 L248 160" stroke="#E0B088" stroke-width="10" stroke-linecap="round"/>
+<circle cx="217" cy="88" r="22" fill="#E0B088"/>
+<path d="M195 84 C197 62 237 62 239 84 C231 74 203 74 195 84 Z" fill="#14302A"/>
+<circle cx="210" cy="90" r="2.5" fill="#14302A"/><circle cx="224" cy="90" r="2.5" fill="#14302A"/>
+<path d="M210 98 q7 6 14 0" stroke="#14302A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+<circle cx="137" cy="46" r="16" fill="#1E6B4A"/><path d="M129 46 l6 6 l10 -11" stroke="#F4F7F3" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="217" cy="38" r="16" fill="#1E6B4A"/><path d="M209 38 l6 6 l10 -11" stroke="#F4F7F3" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg><p><span class="n">4</span>  They walk, tap Done, and keep each other going.</p></figure>
+      </div>
+      <p class="tiny" style="margin-top:18px">Mei and Ken are sample characters.</p>
+    </div>
+  </section>
+
+  <section id="excuses">
+    <div class="wrap buster">
+      <div style="display:flex;flex-direction:column;gap:20px;min-width:0">
+        <p class="eyebrow">Excuse buster</p>
+        <h2>Pick your favourite excuse.</h2>
+        <p style="font-size:20px;color:var(--muted)">We’ve heard them all, because we’ve used them all.</p>
+        <div class="chips" role="group" aria-label="Excuses">
+          <button class="chip" type="button" data-i="0" aria-pressed="true">I’m too busy</button>
+          <button class="chip" type="button" data-i="1" aria-pressed="false">No one to go with</button>
+          <button class="chip" type="button" data-i="2" aria-pressed="false">I’ll start Monday</button>
+          <button class="chip" type="button" data-i="3" aria-pressed="false">It’s raining</button>
+          <button class="chip" type="button" data-i="4" aria-pressed="false">I tried apps before</button>
+          <button class="chip" type="button" data-i="5" aria-pressed="false">I’d rather go solo</button>
+        </div>
+      </div>
+      <div class="reply" aria-live="polite">
+        <div class="avatar" aria-hidden="true">B</div>
+        <div style="min-width:0">
+          <p class="said" id="said">You said: “I’m too busy”</p>
+          <p class="txt" id="answer">That’s why BUDI asks when you’re free first. Thirty minutes at lunch counts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="match">
+    <div class="wrap matcher">
+      <div style="display:flex;flex-direction:column;gap:20px;min-width:0">
+        <p class="eyebrow">Try a match</p>
+        <h2>Who walks when you do?</h2>
+        <p style="font-size:20px;color:var(--muted)">Pick a neighbourhood and a time. This demo shows the kind of match BUDI makes; the real one happens in the app, and nothing opens until you both accept.</p>
+        <form class="form" id="mform">
+          <div class="field"><label for="area">Where are you on weekdays?</label>
+            <select id="area"><option>Raffles Place</option><option>Tanjong Pagar</option><option>Toa Payoh</option><option>Paya Lebar</option><option>Bishan</option><option>Jurong East</option></select></div>
+          <div class="field"><label for="slot">When are you free?</label>
+            <select id="slot"><option value="7:00">Before work, 7:00</option><option value="12:30" selected>Lunch, 12:30</option><option value="18:30">After work, 18:30</option><option value="Sat 8:00">Saturday, 8:00</option></select></div>
+          <div class="field"><label for="act">What do you like?</label>
+            <select id="act"><option>Walking</option><option>Gentle jogging</option><option>Yoga in the park</option><option>Stretching</option></select></div>
+          <button class="btn btn-primary" type="submit" style="justify-content:center">Find my example match</button>
+        </form>
+      </div>
+      <div class="result" id="result" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">Why it works</p><h2>Built for busy people who have quit before.</h2></div>
+      <div class="merits">
+        <div class="merit">
+          <svg viewBox="0 0 140 96" role="img" aria-label="Speech bubble and microphone"><rect width="140" height="96" rx="10" fill="#E2EEE6"/><rect x="18" y="16" width="78" height="40" rx="12" fill="#1E6B4A"/><path d="M34 56 L30 68 L46 56 Z" fill="#1E6B4A"/><rect x="28" y="28" width="46" height="5" rx="2.5" fill="#F4F7F3"/><rect x="28" y="38" width="32" height="5" rx="2.5" fill="#BFD8CC"/><circle cx="106" cy="62" r="20" fill="#E9A93A"/><rect x="101" y="50" width="10" height="16" rx="5" fill="#14302A"/><path d="M96 62 a10 10 0 0 0 20 0" fill="none" stroke="#14302A" stroke-width="2.5" stroke-linecap="round"/></svg>
+          <h3>Talk, don’t fill forms</h3><p>Two minutes of chat sets you up. Speak or type.</p>
+        </div>
+        <div class="merit">
+          <svg viewBox="0 0 140 96" role="img" aria-label="Two walkers on a park path with a map pin"><rect width="140" height="96" rx="10" fill="#E2EEE6"/><path d="M0 78 C40 60, 90 92, 140 70 L140 96 L0 96 Z" fill="#BFD8CC"/><circle cx="56" cy="44" r="6" fill="#14302A"/><path d="M56 50 L56 66 M56 66 L50 78 M56 66 L62 78 M56 55 L48 62 M56 55 L63 61" stroke="#14302A" stroke-width="3.5" stroke-linecap="round" fill="none"/><circle cx="78" cy="42" r="6" fill="#1E6B4A"/><path d="M78 48 L78 64 M78 64 L72 77 M78 64 L85 76 M78 53 L71 60 M78 53 L86 58" stroke="#1E6B4A" stroke-width="3.5" stroke-linecap="round" fill="none"/><path d="M98 8 a10 10 0 0 1 20 0 c0 8 -10 18 -10 18 s-10 -10 -10 -18 Z" fill="#E9A93A"/></svg>
+          <h3>A circle near you</h3><p>Real people in your neighbourhood, on your schedule.</p>
+        </div>
+        <div class="merit">
+          <svg viewBox="0 0 140 96" role="img" aria-label="Week calendar with ticked days"><rect width="140" height="96" rx="10" fill="#E2EEE6"/><rect x="16" y="14" width="108" height="70" rx="8" fill="#FBFBF8" stroke="#D6E1D9"/><rect x="16" y="14" width="108" height="16" rx="8" fill="#1E6B4A"/><g fill="#E2EEE6"><rect x="24" y="38" width="16" height="16" rx="4"/><rect x="64" y="38" width="16" height="16" rx="4"/><rect x="104" y="38" width="12" height="16" rx="4"/><rect x="24" y="60" width="16" height="16" rx="4"/><rect x="64" y="60" width="16" height="16" rx="4"/><rect x="84" y="60" width="16" height="16" rx="4"/></g><rect x="44" y="38" width="16" height="16" rx="4" fill="#E9A93A"/><rect x="84" y="38" width="16" height="16" rx="4" fill="#E9A93A"/><rect x="44" y="60" width="16" height="16" rx="4" fill="#4FB585"/></svg>
+          <h3>Plans that fit your week</h3><p>Agree days and times, then one tap to check in.</p>
+        </div>
+        <div class="merit">
+          <svg viewBox="0 0 140 96" role="img" aria-label="Shield with a tick and a name tag"><rect width="140" height="96" rx="10" fill="#E2EEE6"/><path d="M70 12 L100 22 L100 46 C100 66 86 78 70 86 C54 78 40 66 40 46 L40 22 Z" fill="#1E6B4A"/><path d="M58 48 l8 8 l16 -16" stroke="#F4F7F3" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="96" y="58" width="36" height="22" rx="5" fill="#FBFBF8" stroke="#E9A93A" stroke-width="2"/></svg>
+          <h3>Private until you meet</h3><p>First name only. No login. No contact details shared.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">Two ways in</p><h2>Want company? Or going solo?</h2></div>
+      <div class="two">
+        <div class="way dark">
+          <h3 style="font-size:28px">BUDI Buddy</h3>
+          <p>Matched with a real person nearby who walks when you do. Plan together, tap Done, send a cheer.</p>
+          <a class="btn btn-primary" style="align-self:flex-start;background:var(--paper);color:var(--forest);border-color:var(--paper)" href="https://emba-group4.github.io/budi/" target="_blank" rel="noopener">Find my buddy →</a>
+        </div>
+        <div class="way">
+          <span class="soon">Coming soon</span>
+          <h3 style="font-size:28px">BUDI Coach</h3>
+          <p style="color:var(--muted)">An AI coach for yoga, meditation and diet, free longevity guides, and honest reviews of supplements and wearables. Switch to a buddy any time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap grid">
+      <div style="display:flex;flex-direction:column;gap:20px;min-width:0">
+        <h2>Your next walk is more fun with someone waiting.</h2>
+        <p class="lede">Join the free Singapore pilot. It takes two minutes, and you can talk instead of type.</p>
+        <div class="cta-row"><a class="btn btn-primary" href="https://emba-group4.github.io/budi/" target="_blank" rel="noopener">Join the Singapore pilot →</a></div>
+      </div>
+      <div class="qr">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAuQAAALkCAIAAADIxrcyAAASB0lEQVR4Xu3YQYojwRFAUbfRJXQNge5/AIGuoSs0aGPspe2BRoE6fo3eW091RmWmhk99PZ/f/wAAqPpndTAAgH8TKwBAmlgBANLECgCQJlYAgDSxAgCkiRUAIE2sAABpYgUASBMrAECaWAEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApIkVACBNrAAAaWIFAEgTKwBAmlgBANLECgCQJlYAgDSxAgCkiRUAIE2sAABpYgUASBMrAECaWAEA0sQKAJAmVgCANLECAKSJFQAg7bQ13fl62VqaH3rc7j/8l/9r63wnM9O3da+2TO7zZK8m605MZuZ3bN0NX1YAgDSxAgCkiRUAIE2sAABpYgUASBMrAECaWAEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApIkVACDtlJ7uDx63+xHHXnG+XlbW5XdMznfyO9padzLzlslebZnMvHVGW+se0eR8t/iyAgCkiRUAIE2sAABpYgUASBMrAECaWAEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApIkVACBNrAAAaaf0dG9wvl7e8Fff63G7v3eBN9iaeXK+k5kn626ZzDzZq4mtma37d5uc75at3+AWX1YAgDSxAgCkiRUAIE2sAABpYgUASBMrAECaWAEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApIkVACDtlJ6OwzpfL4ed/bc9bvffXnLV5G582l5N2Gf+Jr6sAABpYgUASBMrAECaWAEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApIkVACBNrAAAaWIFAEgTKwBA2ik9HYf1uN1fnv18vbz87Na6E1vvO2Hm3zG5zxNHPF/+br6sAABpYgUASBMrAECaWAEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApIkVACBNrAAAaWIFAEgTKwBA2ik93Rs8bvc3/FV43eROnq+X1xfmx7b2eXI3+Dn73OfLCgCQJlYAgDSxAgCkiRUAIE2sAABpYgUASBMrAECaWAEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApJ3S0/3B+Xo54tgfZXJGj9v95b064rpbtvZ54ojnu7XPk3WPaHI36PNlBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApIkVACBNrAAAaWIFAEgTKwBAmlgBANLECgCQJlYAgDSxAgCkiRUAIE2sAABpYgUASBMrAECaWAEA0r6ez+/0gBzT+XpZGfxxu7+87hFnnth63yOa3KuJI57R1l7xd/NlBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApIkVACBNrAAAaWIFAEgTKwBAmlgBANLECgCQJlYAgDSxAgCkiRUAIE2sAABpYgUASBMrAECaWAEA0k5b052vl5eXftzuLz87WXfiiDNPbL3v5Hy3Zp6YvC+/Y3JGkzt5REfcq62ZJ+tObN1JX1YAgDSxAgCkiRUAIE2sAABpYgUASBMrAECaWAEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApIkVACDttDXd43bfWvplk5nP18vL604cceYtkzPa2ufJuhNbezUxmXny7OSMJutumbzvxGSvPm3myV5t8WUFAEgTKwBAmlgBANLECgCQJlYAgDSxAgCkiRUAIE2sAABpYgUASBMrAECaWAEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSvp7P75UBz9fLyrqP2/3ldSczT9admMy8ZWuvtkzOaGuvJjNvmezVEd+XviPeycnME76sAABpYgUASBMrAECaWAEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApIkVACBNrAAAaWIFAEgTKwBA2ik93V/kfL28/DaP233l2cnMR7T1vpPzPaLJ+26d0cTW+07WPaLJ3Zjs1WTdLZP33eLLCgCQJlYAgDSxAgCkiRUAIE2sAABpYgUASBMrAECaWAEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApJ22pnvc7itLn6+XlXUn72vmnzviXk1M3ndyJye2Zp6s+2m29uqId5Lf4csKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApIkVACBNrAAAaWIFAEgTKwBAmlgBANLECgCQJlYAgDSxAgCkfT2f3+kBS87XS2mcH3nc7j/6d//P5H231t1yxPedzDwxuVdbtvZqy+SMtvZqa+bJulu2zmjClxUAIE2sAABpYgUASBMrAECaWAEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApIkVACBNrAAAaWIFAEj7ej6/0wOWnK+XlXEet/vL65q5b3K+n2brPh/REe/V5Hwn7ztZd2Iy86fxZQUASBMrAECaWAEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApIkVACBNrAAAaWIFAEgTKwBAmlgBANK+ns/v9IB/i/P1svIqj9v95XW3Zj6iT9vnyftOfNqd3NrniSOe0dY+T/Zqa+YtvqwAAGliBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApIkVACBNrAAAaWIFAEgTKwBAmlgBANLECgCQJlYAgDSxAgCkiRUAIE2sAABpYgUASBMrAEDaaWu68/WysvTjdn953cnMW+seceatvdqy9b6Tdfkdk9/vxBHvxmTmrX3m53xZAQDSxAoAkCZWAIA0sQIApIkVACBNrAAAaWIFAEgTKwBAmlgBANLECgCQJlYAgDSxAgCkiRUAIE2sAABpYgUASBMrAECaWAEA0sQKAJAmVgCAtFN6ujc4Xy8v/9XH7f7ys5N1JyYzH9HkfSdnNHl2MvPEEWfe2qstkzOa2Fr300zu89YZTWae8GUFAEgTKwBAmlgBANLECgCQJlYAgDSxAgCkiRUAIE2sAABpYgUASBMrAECaWAEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSTunp+I/H7f7yTpyvl5efnaw7efaIM/Nzk/OdmNzJicn7HnHmLZN9npic0RFn3uLLCgCQJlYAgDSxAgCkiRUAIE2sAABpYgUASBMrAECaWAEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApH09n98rA56vl5fXfdzuLz/7aetumewzP7f1W9gyed8jmvyOPm2vJo64z5OZJ7bulS8rAECaWAEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApIkVACBNrAAAaWIFAEgTKwBAmlgBANLECgCQdtqa7nG7v7z0+Xp5+dmJT1t3yxHvBn2T3+/WnZysO7G1VxNbM0/Wndi6G1t8WQEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApIkVACBNrAAAaWIFAEgTKwBAmlgBANLECgCQJlYAgLTT1nTn62Vr6Y/yuN1X3ndyvpNnt2ztM79jcie37sYRZ57Y2ueJrZmPeDd8WQEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApIkVACBNrAAAaWIFAEgTKwBAmlgBANLECgCQJlYAgLTT1nSP231l6fP18vK6R5x58r4TW3vF75ic7xHv5GTmybNH9Gnve8TfwhH5sgIApIkVACBNrAAAaWIFAEgTKwBAmlgBANLECgCQJlYAgDSxAgCkiRUAIE2sAABpYgUASBMrAECaWAEA0sQKAJAmVgCANLECAKSJFQAgTawAAGlfz+d3esD/53y9vDzz43Z/+dnJulsm77tla58ne/VpM0/2Ct5h8ht0n/t8WQEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApIkVACBNrAAAaWIFAEgTKwBAmlgBANLECgCQJlYAgLSv5/N7ZcDz9fLyuo/b/eVnJ7Zmnqy7ZXJGk/c94rqfZut8J7ZmnqxL3+T/q4nJvdqa2ZcVACBNrAAAaWIFAEgTKwBAmlgBANLECgCQJlYAgDSxAgCkiRUAIE2sAABpYgUASBMrAECaWAEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBI+3o+v9MDckzn6+XlwR+3+8vPTmzNPFl3yxHPiN+xdTcmtn6Dk72azDxZd4svKwBAmlgBANLECgCQJlYAgDSxAgCkiRUAIE2sAABpYgUASBMrAECaWAEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSxAoAkHbamu58vWwtzQ89bvcf/su/g/f9ucnv94j7fMSZJ2e0ZTLz1hl92rpbfFkBANLECgCQJlYAgDSxAgCkiRUAIE2sAABpYgUASBMrAECaWAEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSxAoAkCZWAIC0U3q6P3jc7kcce8X5ellZ94i29uqI93lr5q11Jyb36ojvO3HE952c78RkryYzT9ad8GUFAEgTKwBAmlgBANLECgCQJlYAgDSxAgCkiRUAIE2sAABpYgUASBMrAECaWAEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSTunp3uB8vbzhr77X43Z/7wJvMJn5085o8r6TfeZ3TM5ocje2HHHmiU873y2+rAAAaWIFAEgTKwBAmlgBANLECgCQJlYAgDSxAgCkiRUAIE2sAABpYgUASBMrAECaWAEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQNopPR2Hdb5eXp79cbu//OzWulu23te6Pze5z1uOOPMR7yQ/58sKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApIkVACBNrAAAaWIFAEgTKwBAmlgBANLECgCQJlYAgDSxAgCkndLTwS86Xy8vr/a43VeenZi875bJPk9M1j3iPm/5tL2a3KuJrXUnfFkBANLECgCQJlYAgDSxAgCkiRUAIE2sAABpYgUASBMrAECaWAEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSxAoAkCZWAIC0U3q6N3jc7m/4q/y3yT6fr5eXN3Rr3cnMWyZ7NXHEvZqY7PNkr7bWPaKtfd5yxPf1ZQUASBMrAECaWAEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApIkVACBNrAAAaWIFAEgTKwBAmlgBANJO6en+4Hy9HHHsjzI5o8ftfri9msx8xL2azPxpJnv1afdqy+SMJibrTu7G5NktvqwAAGliBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApIkVACBNrAAAaWIFAEgTKwBAmlgBANLECgCQJlYAgDSxAgCkiRUAIE2sAABpYgUASBMrAEDa1/P5nR4QAPhsvqwAAGliBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApIkVACBNrAAAaWIFAEgTKwBAmlgBANLECgCQJlYAgDSxAgCkiRUAIE2sAABpYgUASBMrAECaWAEA0sQKAJAmVgCANLECAKSJFQAgTawAAGliBQBIEysAQJpYAQDSxAoAkCZWAIA0sQIApIkVACBNrAAAaWIFAEgTKwBAmlgBANLECgCQJlYAgDSxAgCk/QvkXdJGuana3QAAAABJRU5ErkJggg==" alt="QR code that opens the BUDI app at emba-group4.github.io/budi">
+        <p><b>On your laptop?</b><br>Scan with your phone camera to talk to BUDI.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>BUDI · NUS EMBA BME5405 · Group 4 prototype</span>
+    <span>Talking to BUDI takes about two minutes. Matches are suggestions; you choose who to meet.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var answers=[
+    "That’s why BUDI asks when you’re free first. Thirty minutes at lunch counts.",
+    "That’s the whole point. We find someone nearby who walks when you do.",
+    "Monday-you says hi. Your buddy is expecting you on Wednesday.",
+    "Pick a covered route or a mall loop, or stretch at home. Tap Done either way.",
+    "Apps track you. A person waits for you. That’s the difference.",
+    "Fair enough. BUDI Coach will walk you through yoga, meditation and meals on your own."
+  ];
+  var chips=document.querySelectorAll('.chip');
+  var said=document.getElementById('said'), ans=document.getElementById('answer');
+  chips.forEach(function(c){
+    c.addEventListener('click',function(){
+      chips.forEach(function(x){x.setAttribute('aria-pressed','false')});
+      c.setAttribute('aria-pressed','true');
+      said.textContent='You said: “'+c.textContent+'”';
+      ans.textContent=answers[+c.dataset.i];
+      ans.classList.remove('pop'); void ans.offsetWidth; ans.classList.add('pop');
+    });
+  });
+
+  var names=[["Lin","50–55","#E9A93A"],["Raj","45–50","#BFD8CC"],["Aisha","45–50","#F2C9A0"],["Wei Ming","55–60","#E9A93A"],["Siti","50–55","#BFD8CC"],["Daniel","45–50","#F2C9A0"]];
+  var result=document.getElementById('result');
+  function ticket(){
+    var area=document.getElementById('area').value, slot=document.getElementById('slot').value, act=document.getElementById('act').value;
+    var p=names[Math.floor(Math.random()*names.length)];
+    var km=(0.4+Math.random()*1.4).toFixed(1);
+    result.innerHTML='';
+    var t=document.createElement('div'); t.className='ticket pop';
+    t.innerHTML='<p class="eyebrow">Example match</p>'+
+      '<div class="row"><div class="face" style="background:'+p[2]+'">'+p[0][0]+'</div><div><h3 style="font-size:26px">'+p[0]+'</h3><p style="color:var(--muted)">'+p[1]+' · '+km+' km from '+area+'</p></div></div>'+
+      '<div class="why"><span>Free at '+slot+'</span><span>Likes '+act.toLowerCase()+'</span><span>Same goal: stay active</span></div>'+
+      '<p>Suggested plan: <b>'+act+', '+slot+'</b>, twice a week, near '+area+'.</p>'+
+      '<a class="btn btn-primary" style="justify-content:center" href="https://emba-group4.github.io/budi/" target="_blank" rel="noopener">Find my real match →</a>'+
+      '<p class="ex">Example only. Sample names; real matches are people who join the pilot, and both of you accept first.</p>';
+    result.appendChild(t);
+  }
+  document.getElementById('mform').addEventListener('submit',function(e){
+    e.preventDefault();
+    var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduce){ticket();return;}
+    result.innerHTML='<div class="radar" role="status"><span class="tiny">Looking nearby…</span></div>';
+    setTimeout(ticket,1100);
+  });
+  ticket();
+})();
+</script>
+
+</body></html>
