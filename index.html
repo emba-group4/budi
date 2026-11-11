@@ -198,8 +198,8 @@ next:a?c[a].replace("{name}",h.profile.name||""):""});if(S=!1,o.changed&&o.chang
 T(await f("profile",{profile:h.profile}))}catch(e){}return void Y()}const e=D();return e?(M("ai",o.reply||c[e]),h.field=e,m(),void Y()):(o.reply&&M("ai",o.reply),L())}
 return M("ai",o.reply||"Sorry, I didn't catch that. You can also tap an option."),void Y()}catch(e){S=!1}}if(n){let t={};for(const a of l)"name"!==a&&Object.assign(t,G(a,e))
 ;if(Object.assign(h.profile,t),t.area&&(h.profile.city=I(t.area)),Object.keys(t).length){M("ai","Updated: "+Object.keys(t).map((e=>r[e]+" → "+B(e,t[e]))).join("; ")+".");try{
-T(await f("profile",{profile:h.profile}))}catch(e){}}else M("ai",'I couldn\'t tell what changed. Try words like "lunch", "gym", "weekends" or a neighbourhood name.')
-;return void Y()}const o=G(t,e),X={},Z=f=>{const v=h.profile[f];return!(null==v||""===v||Array.isArray(v)&&!v.length)};for(const f of["area","slots","activities","goal"])f===t||Z(f)||Object.assign(X,G(f,e));if("age"!==t&&!Z("age")){const q=e.match(/\b(?:i'?m|i am|aged?)\s+(\d{2})\b|\b(\d{2})\s*(?:years? old|yo)\b/i);q&&Object.assign(X,G("age",q[1]||q[2]))}"mode"===t||Z("mode")||!/\b(meet ?up|meet in person|in person)\b/i.test(e)||(X.mode="meet");if(!Object.keys(o).length&&!Object.keys(X).length)return M("ai","I didn't quite catch that. Could you say it another way, or tap one of the options?"),void Y()
+T(await f("profile",{profile:h.profile}))}catch(e){}}else M("ai",window.budiChat?window.budiChat(e,1):'I couldn\'t tell what changed. Try words like "lunch", "gym", "weekends" or a neighbourhood name.')
+;return void Y()}const o=G(t,e),X={},Z=f=>{const v=h.profile[f];return!(null==v||""===v||Array.isArray(v)&&!v.length)};for(const f of["area","slots","activities","goal"])f===t||Z(f)||Object.assign(X,G(f,e));if("age"!==t&&!Z("age")){const q=e.match(/\b(?:i'?m|i am|aged?)\s+(\d{2})\b|\b(\d{2})\s*(?:years? old|yo)\b/i);q&&Object.assign(X,G("age",q[1]||q[2]))}"mode"===t||Z("mode")||!/\b(meet ?up|meet in person|in person)\b/i.test(e)||(X.mode="meet");if(!Object.keys(o).length&&!Object.keys(X).length)return M("ai",window.budiChat?window.budiChat(e,0,typeof c=="object"&&c&&typeof c[t]=="string"?c[t].replace("{name}",h.profile&&h.profile.name||"there"):""):"I didn't quite catch that. Could you say it another way, or tap one of the options?"),void Y()
 ;const ar=o.area||X.area,ex=Object.keys(X).filter(k=>!(k in o));if(Object.assign(h.profile,X,o),ar&&(h.profile.city=I(ar)),ex.length&&M("ai","Noted too: "+ex.map(k=>r[k]+" → "+B(k,X[k])).join("; ")+"."),"activities"===t){
 const t=e.toLowerCase().replace(/[^\p{L}\s,]/gu,"").split(/,|\band\b/).map((e=>e.trim())).filter((e=>e&&e.split(" ").length<=4)).slice(0,4);t.length&&(h.profile.interests=t)}L()
 }(e)};n.addEventListener("keydown",(e=>{"Enter"===e.key&&(e.preventDefault(),d())})),W.append(A("div",{class:"compose"},A("button",{class:"icon mic","aria-label":"Speak",
@@ -342,5 +342,5 @@ void(t.split(" ").length>3&&setTimeout((function(){w(e)}),150))}for(var i=u("mai
 var a=c(i[o].textContent);if(t===a||(" "+t+" ").indexOf(" "+a+" ")>=0)return i[o].click(),void y("✓ "+i[o].textContent.trim())}
 y("Didn't catch that. Try “accept”, “find my buddy” or “done”.")}}function T(){h(),m(),new MutationObserver((function(){l||(l=1,requestAnimationFrame((function(){l=0,m()})))
 })).observe(document.getElementById("main"),{childList:!0,subtree:!0})}}();</script>
-<script src="intro.js?v=4" defer></script>
+<script src="chat.js?v=1"></script><script src="intro.js?v=4" defer></script>
 </body></html>
