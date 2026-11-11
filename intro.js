@@ -1,7 +1,7 @@
 /* BUDI "How it works" intro: a 25-second animated walkthrough shown on first visit, replayable from the welcome screen. */
 (function(){
   if (/[?&]view=admin/.test(location.search)) return;
-  var KEY = 'budi-intro-v3';
+  var KEY = 'budi-intro-v5';
   var css = [
     '.bi-ov{position:fixed;inset:0;z-index:9999;background:rgba(10,26,22,.95);display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));font-family:inherit}',
     '.bi-ov[hidden]{display:none!important}',
@@ -60,11 +60,11 @@
     '.bi-guide{display:flex;align-items:flex-end;gap:12px}',
     '.bi-dog{width:96px;height:96px;flex:none;overflow:visible;animation:biBob 1.2s ease-in-out infinite}',
     '@keyframes biBob{50%{transform:translateY(-4px)}}',
-    '.bi-tail{transform-box:fill-box;transform-origin:0% 100%;animation:biWag .35s ease-in-out infinite alternate}',
-    '@keyframes biWag{from{transform:rotate(-14deg)}to{transform:rotate(16deg)}}',
+    '.bi-tail{transform-box:fill-box;transform-origin:10% 90%;animation:biWag .3s ease-in-out infinite alternate}',
+    '@keyframes biWag{from{transform:rotate(-8deg)}to{transform:rotate(10deg)}}',
     '.bi-ear{transform-box:fill-box;animation:biEar 1.6s ease-in-out infinite}',
-    '.bi-ear.l{transform-origin:85% 5%}.bi-ear.r{transform-origin:15% 5%;animation-direction:reverse}',
-    '@keyframes biEar{50%{transform:rotate(9deg)}}',
+    '.bi-ear.l{transform-origin:70% 100%}.bi-ear.r{transform-origin:30% 100%;animation-direction:reverse}',
+    '@keyframes biEar{0%,70%,100%{transform:none}80%{transform:rotate(-7deg)}90%{transform:rotate(4deg)}}',
     '.bi-eyes{transform-box:fill-box;transform-origin:center;animation:biBlink 4s infinite}',
     '@keyframes biBlink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}',
     '.bi-dog .p,.bi-dog .bi-tongue{display:none}',
@@ -94,7 +94,7 @@
 
   var mic = '<svg viewBox="0 0 24 24" fill="none" stroke="#14302A" stroke-width="2.4" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3" fill="#14302A"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>';
   var scenes = [
-    { cap: 'Woof, I’m Pip! Just talk to BUDI for two minutes. One sentence fills most of your profile.', html:
+    { cap: 'Woof, I’m Hachi! Just talk to BUDI for two minutes. One sentence fills most of your profile.', html:
       '<div class="bi-bub bi-bot a" style="--t:.2s">Hi! I’m BUDI. Where are you on weekdays, and when are you free?</div>' +
       '<div class="bi-bub bi-me a" style="--t:1.4s">I work at Raffles Place. Free Wed and Fri at lunch. I like walking.</div>' +
       '<div class="bi-bub bi-bot a" style="--t:2.6s">Got it. Noted:</div>' +
@@ -126,29 +126,31 @@
     var bars = scenes.map(function(){ return '<i><b></b></i>'; }).join('');
     var sc = scenes.map(function(s,i){ return '<div class="bi-sc" data-i="'+i+'">'+s.html+'</div>'; }).join('');
     ov.innerHTML = '<div class="bi-box">' +
-      '<div class="bi-top"><span>Pip shows you BUDI · 25 sec</span><button type="button" class="bi-skip" id="bi-skip">Skip</button></div>' +
+      '<div class="bi-top"><span>Hachi shows you BUDI · 25 sec</span><button type="button" class="bi-skip" id="bi-skip">Skip</button></div>' +
       '<div class="bi-bars" style="--d:'+DUR+'ms">'+bars+'</div>' +
       '<div class="bi-phone"><div class="bi-hd"><span class="bi-dots"></span>BUDI</div>'+sc+
       '<div class="bi-end"><h3>That’s BUDI.<br>Two minutes to start.</h3><button type="button" class="bi-cta" id="bi-go">Start talking</button><button type="button" class="bi-ghost" id="bi-again">Watch again</button></div></div>' +
       '<div class="bi-guide"><svg class="bi-dog" data-s="0" viewBox="0 0 120 120" aria-hidden="true">'+
-      '<g class="bi-tail"><path d="M84 92 q24 -6 20 -32" stroke="#B97C14" stroke-width="9" fill="none" stroke-linecap="round"/></g>'+
-      '<ellipse cx="60" cy="94" rx="28" ry="21" fill="#E9A93A"/><ellipse cx="60" cy="100" rx="15" ry="12" fill="#FBE6C2"/>'+
-      '<ellipse cx="45" cy="113" rx="8" ry="5" fill="#B97C14"/><ellipse cx="75" cy="113" rx="8" ry="5" fill="#B97C14"/>'+
+      '<g class="bi-tail"><path d="M84 90 c18 -2 23 -22 11 -29 c-9 -5 -16 4 -10 10" stroke="#D8C29C" stroke-width="10" fill="none" stroke-linecap="round"/><path d="M93 66 c-5 -2 -8 3 -4 6" stroke="#FFFBF3" stroke-width="4" fill="none" stroke-linecap="round"/></g>'+
+      '<ellipse cx="60" cy="94" rx="28" ry="21" fill="#EADBC0" stroke="#BFA27A" stroke-width="1.5"/><path d="M46 78 C46 96 50 112 60 112 C70 112 74 96 74 78 Z" fill="#FFFBF3"/>'+
+      '<ellipse cx="45" cy="113" rx="8" ry="5" fill="#FFFBF3" stroke="#E6C9A8" stroke-width="1"/><ellipse cx="75" cy="113" rx="8" ry="5" fill="#FFFBF3" stroke="#E6C9A8" stroke-width="1"/>'+
       '<rect x="41" y="71" width="38" height="7" rx="3.5" fill="#1E6B4A"/><circle cx="60" cy="81" r="4.5" fill="#F4F7F3" stroke="#1E6B4A" stroke-width="1.5"/>'+
-      '<g class="bi-ear l"><path d="M38 24 q-18 6 -11 36 q11 2 15 -11 Z" fill="#B97C14"/></g>'+
-      '<g class="bi-ear r"><path d="M82 24 q18 6 11 36 q-11 2 -15 -11 Z" fill="#B97C14"/></g>'+
-      '<circle cx="60" cy="44" r="28" fill="#E9A93A"/><ellipse cx="71" cy="38" rx="9" ry="8" fill="#F7D9A6"/>'+
-      '<ellipse cx="60" cy="56" rx="16" ry="12" fill="#FBE6C2"/>'+
-      '<g class="bi-eyes"><circle cx="50" cy="40" r="4.2" fill="#14302A"/><circle cx="70" cy="40" r="4.2" fill="#14302A"/><circle cx="51.5" cy="38.5" r="1.4" fill="#FFFFFF"/><circle cx="71.5" cy="38.5" r="1.4" fill="#FFFFFF"/></g>'+
-      '<circle cx="41" cy="52" r="3.6" fill="#F2A07B" opacity=".7"/><circle cx="79" cy="52" r="3.6" fill="#F2A07B" opacity=".7"/>'+
-      '<ellipse cx="60" cy="51" rx="5.2" ry="3.8" fill="#14302A"/>'+
-      '<path class="bi-tongue" d="M56.5 58 q3.5 10 7 0 Z" fill="#E36F6F"/>'+
-      '<path d="M53 57 q7 6.5 14 0" stroke="#14302A" stroke-width="2.2" fill="none" stroke-linecap="round"/>'+
-      '<g class="p p0"><rect x="88" y="48" width="10" height="16" rx="5" fill="#F4F7F3" stroke="#14302A" stroke-width="2"/><path d="M93 64 v10" stroke="#F4F7F3" stroke-width="3"/><ellipse cx="90" cy="80" rx="8" ry="6" fill="#E9A93A" stroke="#B97C14" stroke-width="1.5"/></g>'+
+      '<g class="bi-ear l"><path d="M35 32 L39 3 L58 20 Z" fill="#EADBC0" stroke="#BFA27A" stroke-width="1.5" stroke-linejoin="round"/><path d="M40 26 L41.5 11 L51 20 Z" fill="#E9B8A2"/></g>'+
+      '<g class="bi-ear r"><path d="M85 32 Q90 16 84 9 L62 20 Z" fill="#EADBC0" stroke="#BFA27A" stroke-width="1.5" stroke-linejoin="round"/><path d="M84 9 Q96 12 95 24 Q90 18 84 9 Z" fill="#D9C3A0" stroke="#BFA27A" stroke-width="1.2" stroke-linejoin="round"/><path d="M79 26 Q82 17 80 13 L69 20 Z" fill="#E9B8A2"/></g>'+
+      '<circle cx="60" cy="44" r="28" fill="#EADBC0" stroke="#BFA27A" stroke-width="1.5"/>'+
+      '<path d="M33 46 C34 64 48 74 60 74 C72 74 86 64 87 46 C80 54 71 52 60 52 C49 52 40 54 33 46 Z" fill="#FFFBF3"/>'+
+      '<ellipse cx="60" cy="58" rx="15" ry="11" fill="#FFFBF3"/>'+
+      '<ellipse cx="49" cy="32" rx="3.4" ry="2.3" fill="#FFFBF3"/><ellipse cx="71" cy="32" rx="3.4" ry="2.3" fill="#FFFBF3"/>'+
+      '<g class="bi-eyes"><ellipse cx="50" cy="41" rx="3.8" ry="3.1" fill="#14302A"/><ellipse cx="70" cy="41" rx="3.8" ry="3.1" fill="#14302A"/><circle cx="51.3" cy="39.9" r="1.2" fill="#FFFFFF"/><circle cx="71.3" cy="39.9" r="1.2" fill="#FFFFFF"/></g>'+
+      '<circle cx="42" cy="54" r="3.4" fill="#F2A07B" opacity=".6"/><circle cx="78" cy="54" r="3.4" fill="#F2A07B" opacity=".6"/>'+
+      '<ellipse cx="60" cy="51.5" rx="5.4" ry="3.9" fill="#14302A"/>'+
+      '<path class="bi-tongue" d="M56.5 58.5 q3.5 10 7 0 Z" fill="#E36F6F"/>'+
+      '<path d="M60 55 v3 M53 57.5 q3.5 4 7 0.5 q3.5 3.5 7 -0.5" stroke="#14302A" stroke-width="2" fill="none" stroke-linecap="round"/>'+
+      '<g class="p p0"><rect x="88" y="48" width="10" height="16" rx="5" fill="#F4F7F3" stroke="#14302A" stroke-width="2"/><path d="M93 64 v10" stroke="#F4F7F3" stroke-width="3"/><ellipse cx="90" cy="80" rx="8" ry="6" fill="#FFFBF3" stroke="#D8C29C" stroke-width="1.5"/></g>'+
       '<g class="p p1"><g class="bi-lens"><circle cx="97" cy="46" r="11" fill="#DCEFE4" fill-opacity=".75" stroke="#14302A" stroke-width="3"/><path d="M89 54 l-8 10" stroke="#14302A" stroke-width="4.5" stroke-linecap="round"/></g></g>'+
       '<g class="p p2"><path d="M60 82 C 82 100, 100 70, 106 94" stroke="#A8402D" stroke-width="3.2" fill="none" stroke-linecap="round"/><circle cx="106" cy="98" r="5" fill="none" stroke="#A8402D" stroke-width="3.2"/></g>'+
-      '<g class="p p3"><ellipse class="bi-paw" cx="93" cy="58" rx="8.5" ry="7.5" fill="#E9A93A" stroke="#B97C14" stroke-width="1.5"/><path d="M104 22 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2Z" fill="#E9A93A"/><path d="M16 30 l1.6 4.4 4.4 1.6 -4.4 1.6 -1.6 4.4 -1.6 -4.4 -4.4 -1.6 4.4 -1.6Z" fill="#4FB585"/></g>'+
-      '<g class="p p4"><ellipse class="bi-wave" cx="92" cy="60" rx="8.5" ry="7.5" fill="#E9A93A" stroke="#B97C14" stroke-width="1.5"/></g>'+
+      '<g class="p p3"><ellipse class="bi-paw" cx="93" cy="58" rx="8.5" ry="7.5" fill="#FFFBF3" stroke="#D8C29C" stroke-width="1.5"/><path d="M104 22 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2Z" fill="#E9A93A"/><path d="M16 30 l1.6 4.4 4.4 1.6 -4.4 1.6 -1.6 4.4 -1.6 -4.4 -4.4 -1.6 4.4 -1.6Z" fill="#4FB585"/></g>'+
+      '<g class="p p4"><ellipse class="bi-wave" cx="92" cy="60" rx="8.5" ry="7.5" fill="#FFFBF3" stroke="#D8C29C" stroke-width="1.5"/></g>'+
       '</svg><div class="bi-say" aria-live="polite"><small></small><span class="bi-cap"></span></div></div><p class="bi-note">Ken is an example buddy. Your matches are real people who join.</p></div>';
     document.body.appendChild(ov);
     ov.querySelector('#bi-skip').onclick = close;
@@ -166,12 +168,12 @@
     sc.forEach(function(s){ s.classList.remove('on'); });
     if (i >= scenes.length){
       bars.forEach(function(b){ b.className = 'done'; });
-      end.classList.add('on'); dog.setAttribute('data-s','4'); lbl.textContent = 'Pip'; cap.textContent = 'That’s it! Two minutes to start. Let’s go walkies.';
+      end.classList.add('on'); dog.setAttribute('data-s','4'); lbl.textContent = 'Hachi'; cap.textContent = 'That’s it! A buddy who always shows up. Two minutes to start.';
       ov.querySelector('#bi-go').focus(); return;
     }
     void sc[i].offsetWidth;
     sc[i].classList.add('on'); bars[i].className = 'on';
-    dog.setAttribute('data-s', String(i)); lbl.textContent = 'Pip · ' + (i+1) + ' of ' + scenes.length; cap.textContent = scenes[i].cap;
+    dog.setAttribute('data-s', String(i)); lbl.textContent = 'Hachi · ' + (i+1) + ' of ' + scenes.length; cap.textContent = scenes[i].cap;
     timer = setTimeout(function(){ go(i+1); }, DUR);
   }
   function open(){
