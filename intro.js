@@ -1,7 +1,7 @@
 /* BUDI "How it works" intro: a 25-second animated walkthrough shown on first visit, replayable from the welcome screen. */
 (function(){
   if (/[?&]view=admin/.test(location.search)) return;
-  var KEY = 'budi-intro-v1';
+  var KEY = 'budi-intro-v2';
   var css = [
     '.bi-ov{position:fixed;inset:0;z-index:9999;background:rgba(10,26,22,.95);display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));font-family:inherit}',
     '.bi-ov[hidden]{display:none!important}',
@@ -62,6 +62,9 @@
     '.bi-cta:focus-visible,.bi-ghost:focus-visible,.bi-skip:focus-visible,.bi-replay:focus-visible{outline:3px solid #E9A93A;outline-offset:2px}',
     '.bi-replay{display:inline-flex;align-items:center;gap:8px;margin:10px auto 0;padding:9px 14px;border-radius:999px;border:1.5px solid currentColor;background:transparent;color:inherit;font-family:inherit;font-weight:600;font-size:14px;line-height:1;cursor:pointer;opacity:.9}',
     '.bi-replay-wrap{display:flex;justify-content:center}',
+    '.bi-hbtn{margin-left:auto;display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;border:1.5px solid #1E6B4A;background:#E2EEE6;color:#14302A;font-family:inherit;font-weight:700;font-size:13px;line-height:1;cursor:pointer;white-space:nowrap}',
+    '.bi-hbtn.bi-float{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:calc(12px + env(safe-area-inset-right,0px));z-index:9000}',
+    '.bi-hbtn:focus-visible{outline:3px solid #E9A93A;outline-offset:2px}',
     '@media (prefers-reduced-motion:reduce){.bi-sc .a{opacity:1;transform:none}.bi-sc.on .a,.bi-sc.on .bi-mic,.bi-sc.on .bi-radar:after,.bi-bars i.on b{animation:none!important}.bi-bars i.on b{width:100%}}'
   ].join('\n');
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
@@ -150,16 +153,23 @@
     w.firstChild.onclick = open;
     start.insertAdjacentElement('afterend', w);
   }
+  function addHeaderBtn(){
+    if (document.querySelector('.bi-hbtn')) return;
+    var host = document.querySelector('header.top') || document.querySelector('header');
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'bi-hbtn'; b.textContent = '\u25B6 How it works';
+    b.setAttribute('aria-label', 'Watch how BUDI works, 25 seconds');
+    b.onclick = open;
+    if (host) host.appendChild(b); else { b.classList.add('bi-float'); document.body.appendChild(b); }
+  }
   function init(){
+    addHeaderBtn();
     addReplay();
     var main = document.getElementById('main');
     if (main) new MutationObserver(function(){ addReplay(); }).observe(main, { childList: true, subtree: true });
     var seen = null; try { seen = localStorage.getItem(KEY); } catch(e) {}
-    if (!seen) setTimeout(function(){
-      var m = document.getElementById('main');
-      var onWelcome = m && Array.prototype.some.call(m.querySelectorAll('button'), function(b){ return b.textContent.trim() === 'Start'; });
-      if (onWelcome) open();
-    }, 600);
+    var force = /[?&]intro=1/.test(location.search);
+    if (force || !seen) setTimeout(open, 700);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
