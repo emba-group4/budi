@@ -1,7 +1,7 @@
 /* BUDI "How it works" intro: a 25-second animated walkthrough shown on first visit, replayable from the welcome screen. */
 (function(){
   if (/[?&]view=admin/.test(location.search)) return;
-  var KEY = 'budi-intro-v2';
+  var KEY = 'budi-intro-v3';
   var css = [
     '.bi-ov{position:fixed;inset:0;z-index:9999;background:rgba(10,26,22,.95);display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));font-family:inherit}',
     '.bi-ov[hidden]{display:none!important}',
@@ -14,7 +14,7 @@
     '.bi-bars i.done b{width:100%}',
     '.bi-bars i.on b{animation:biFill var(--d) linear forwards}',
     '@keyframes biFill{to{width:100%}}',
-    '.bi-phone{position:relative;height:min(470px,62vh);min-height:360px;background:#F4F7F3;border-radius:28px;border:8px solid #14302A;overflow:hidden;color:#14302A}',
+    '.bi-phone{position:relative;height:min(430px,56vh);min-height:340px;background:#F4F7F3;border-radius:28px;border:8px solid #14302A;overflow:hidden;color:#14302A}',
     '.bi-hd{display:flex;align-items:center;gap:8px;padding:12px 16px;background:#1E6B4A;color:#F4F7F3;font-weight:800;letter-spacing:.02em}',
     '.bi-dots{position:relative;width:26px;height:16px}.bi-dots:before,.bi-dots:after{content:"";position:absolute;top:0;width:16px;height:16px;border-radius:50%}.bi-dots:before{left:0;background:#F4F7F3}.bi-dots:after{left:10px;background:#E9A93A;border:2px solid #1E6B4A;width:12px;height:12px}',
     '.bi-sc{position:absolute;inset:48px 0 0;padding:16px;display:flex;flex-direction:column;gap:10px;opacity:0;visibility:hidden}',
@@ -57,7 +57,30 @@
     '.bi-end h3{margin:0;font-size:24px;line-height:1.15}',
     '.bi-cta{border:2px solid #14302A;border-radius:999px;padding:14px 18px;font-family:inherit;font-weight:700;font-size:16px;line-height:1;cursor:pointer;background:#14302A;color:#F4F7F3;box-shadow:3px 3px 0 #E9A93A}',
     '.bi-ghost{border:2px solid #14302A;border-radius:999px;padding:12px 18px;font-family:inherit;font-weight:600;font-size:15px;line-height:1;cursor:pointer;background:transparent;color:#14302A}',
-    '.bi-cap{color:#F4F7F3;font-size:16px;line-height:1.4;text-align:center;min-height:46px;font-weight:600}',
+    '.bi-guide{display:flex;align-items:flex-end;gap:12px}',
+    '.bi-dog{width:96px;height:96px;flex:none;overflow:visible;animation:biBob 1.2s ease-in-out infinite}',
+    '@keyframes biBob{50%{transform:translateY(-4px)}}',
+    '.bi-tail{transform-box:fill-box;transform-origin:0% 100%;animation:biWag .35s ease-in-out infinite alternate}',
+    '@keyframes biWag{from{transform:rotate(-14deg)}to{transform:rotate(16deg)}}',
+    '.bi-ear{transform-box:fill-box;animation:biEar 1.6s ease-in-out infinite}',
+    '.bi-ear.l{transform-origin:85% 5%}.bi-ear.r{transform-origin:15% 5%;animation-direction:reverse}',
+    '@keyframes biEar{50%{transform:rotate(9deg)}}',
+    '.bi-eyes{transform-box:fill-box;transform-origin:center;animation:biBlink 4s infinite}',
+    '@keyframes biBlink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}',
+    '.bi-dog .p,.bi-dog .bi-tongue{display:none}',
+    '.bi-dog[data-s="0"] .p0,.bi-dog[data-s="1"] .p1,.bi-dog[data-s="2"] .p2,.bi-dog[data-s="3"] .p3,.bi-dog[data-s="4"] .p4{display:inline}',
+    '.bi-dog[data-s="2"] .bi-tongue,.bi-dog[data-s="3"] .bi-tongue,.bi-dog[data-s="4"] .bi-tongue{display:inline}',
+    '.bi-wave{transform-box:fill-box;transform-origin:20% 100%;animation:biWaveK .45s ease-in-out infinite alternate}',
+    '@keyframes biWaveK{to{transform:rotate(-28deg)}}',
+    '.bi-paw{transform-box:fill-box;animation:biFive .7s ease-in-out infinite alternate}',
+    '@keyframes biFive{to{transform:translateY(-9px)}}',
+    '.bi-lens{transform-box:fill-box;animation:biScan 1.3s ease-in-out infinite alternate}',
+    '@keyframes biScan{to{transform:translate(-8px,4px)}}',
+    '.bi-say{position:relative;flex:1;min-width:0;background:#FBFBF8;color:#14302A;border-radius:16px;padding:10px 13px;font-size:15px;line-height:1.35;font-weight:600;min-height:64px}',
+    '.bi-say:before{content:"";position:absolute;left:-9px;bottom:18px;border-style:solid;border-width:8px 10px 8px 0;border-color:transparent #FBFBF8 transparent transparent}',
+    '.bi-say small{display:block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#1E6B4A;margin-bottom:3px}',
+    '.bi-say.pop{animation:biPop .35s ease}',
+    '@keyframes biPop{from{transform:scale(.92);opacity:.3}to{transform:none;opacity:1}}',
     '.bi-note{color:rgba(244,247,243,.7);font-size:12px;text-align:center}',
     '.bi-cta:focus-visible,.bi-ghost:focus-visible,.bi-skip:focus-visible,.bi-replay:focus-visible{outline:3px solid #E9A93A;outline-offset:2px}',
     '.bi-replay{display:inline-flex;align-items:center;gap:8px;margin:10px auto 0;padding:9px 14px;border-radius:999px;border:1.5px solid currentColor;background:transparent;color:inherit;font-family:inherit;font-weight:600;font-size:14px;line-height:1;cursor:pointer;opacity:.9}',
@@ -65,31 +88,31 @@
     '.bi-hbtn{margin-left:auto;display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;border:1.5px solid #1E6B4A;background:#E2EEE6;color:#14302A;font-family:inherit;font-weight:700;font-size:13px;line-height:1;cursor:pointer;white-space:nowrap}',
     '.bi-hbtn.bi-float{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:calc(12px + env(safe-area-inset-right,0px));z-index:9000}',
     '.bi-hbtn:focus-visible{outline:3px solid #E9A93A;outline-offset:2px}',
-    '@media (prefers-reduced-motion:reduce){.bi-sc .a{opacity:1;transform:none}.bi-sc.on .a,.bi-sc.on .bi-mic,.bi-sc.on .bi-radar:after,.bi-bars i.on b{animation:none!important}.bi-bars i.on b{width:100%}}'
+    '@media (prefers-reduced-motion:reduce){.bi-dog,.bi-tail,.bi-ear,.bi-eyes,.bi-wave,.bi-paw,.bi-lens,.bi-say.pop{animation:none!important}.bi-sc .a{opacity:1;transform:none}.bi-sc.on .a,.bi-sc.on .bi-mic,.bi-sc.on .bi-radar:after,.bi-bars i.on b{animation:none!important}.bi-bars i.on b{width:100%}}'
   ].join('\n');
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
 
   var mic = '<svg viewBox="0 0 24 24" fill="none" stroke="#14302A" stroke-width="2.4" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3" fill="#14302A"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>';
   var scenes = [
-    { cap: 'Talk to BUDI for two minutes. One sentence fills most of your profile.', html:
+    { cap: 'Woof, I’m Pip! Just talk to BUDI for two minutes. One sentence fills most of your profile.', html:
       '<div class="bi-bub bi-bot a" style="--t:.2s">Hi! I’m BUDI. Where are you on weekdays, and when are you free?</div>' +
       '<div class="bi-bub bi-me a" style="--t:1.4s">I work at Raffles Place. Free Wed and Fri at lunch. I like walking.</div>' +
       '<div class="bi-bub bi-bot a" style="--t:2.6s">Got it. Noted:</div>' +
       '<div class="bi-chips"><span class="bi-chip a" style="--t:3.0s">Raffles Place</span><span class="bi-chip a" style="--t:3.3s">Wed, Fri · 12:30</span><span class="bi-chip a" style="--t:3.6s">Walking</span></div>' +
       '<div class="bi-mic">' + mic + '</div>' },
-    { cap: 'BUDI finds a real person nearby on your schedule. Nothing opens until you both accept.', html:
+    { cap: 'Sniff, sniff… found Ken! 1.1 km away and free when you are. You both say yes first.', html:
       '<div class="bi-radar a" style="--t:0s"><span style="left:18px;top:30px;background:#1E6B4A"></span><span style="right:22px;bottom:26px;background:#E9A93A"></span></div>' +
       '<div class="bi-card a" style="--t:2.0s"><div class="bi-row"><div class="bi-av" style="background:#E9A93A">K</div><div><b>Ken</b> · 45–50<div class="bi-sm">1.1 km away · Tanjong Pagar</div></div></div>' +
       '<div class="bi-chips"><span class="bi-chip">Free Wed, Fri 12:30</span><span class="bi-chip">Likes walking</span></div>' +
       '<div class="bi-btn bi-press a" style="--t:2.4s">Accept</div></div>' +
       '<div class="bi-ok a" style="--t:3.8s"><span>You ✓</span><span>Ken ✓</span></div>' },
-    { cap: 'Agree a plan together, by voice or a few taps.', html:
+    { cap: 'Wednesday and Friday at 12:30? I’ll fetch the leash. Plan saved!', html:
       '<div class="bi-bub bi-me a" style="--t:.2s">Wednesday and Friday, 12:30, Fort Canning Park.</div>' +
       '<div class="bi-card a" style="--t:1.2s"><b>Your plan with Ken</b>' +
       '<div class="bi-week"><i>M</i><i>T</i><i class="hit" style="--t:1.9s">W</i><i>T</i><i class="hit" style="--t:2.2s">F</i><i>S</i><i>S</i></div>' +
       '<div class="bi-sm">12:30 · 30 min walk · Fort Canning Park</div>' +
       '<div class="bi-btn bi-press a" style="--t:2.6s">Save plan</div></div>' },
-    { cap: 'Tap Done each day. You see your buddy’s days, and can send a cheer.', html:
+    { cap: 'Tap Done after your walk. Ken walked too. Paw five!', html:
       '<div class="bi-card a" style="--t:.2s"><div class="bi-row"><div class="bi-av" style="background:#E2EEE6">W</div><div><b>Today · Walk with Ken</b><div class="bi-sm">12:30 · Fort Canning Park</div></div></div>' +
       '<div class="bi-btn bi-press a" style="--t:.6s">Done for today ✓</div></div>' +
       '<div class="bi-toast a" style="--t:2.0s">Ken checked in too · cheer sent</div>' +
@@ -103,11 +126,30 @@
     var bars = scenes.map(function(){ return '<i><b></b></i>'; }).join('');
     var sc = scenes.map(function(s,i){ return '<div class="bi-sc" data-i="'+i+'">'+s.html+'</div>'; }).join('');
     ov.innerHTML = '<div class="bi-box">' +
-      '<div class="bi-top"><span>How BUDI works · 25 sec</span><button type="button" class="bi-skip" id="bi-skip">Skip</button></div>' +
+      '<div class="bi-top"><span>Pip shows you BUDI · 25 sec</span><button type="button" class="bi-skip" id="bi-skip">Skip</button></div>' +
       '<div class="bi-bars" style="--d:'+DUR+'ms">'+bars+'</div>' +
       '<div class="bi-phone"><div class="bi-hd"><span class="bi-dots"></span>BUDI</div>'+sc+
       '<div class="bi-end"><h3>That’s BUDI.<br>Two minutes to start.</h3><button type="button" class="bi-cta" id="bi-go">Start talking</button><button type="button" class="bi-ghost" id="bi-again">Watch again</button></div></div>' +
-      '<p class="bi-cap" aria-live="polite"></p><p class="bi-note">Ken is an example buddy. Your matches are real people who join.</p></div>';
+      '<div class="bi-guide"><svg class="bi-dog" data-s="0" viewBox="0 0 120 120" aria-hidden="true">'+
+      '<g class="bi-tail"><path d="M84 92 q24 -6 20 -32" stroke="#B97C14" stroke-width="9" fill="none" stroke-linecap="round"/></g>'+
+      '<ellipse cx="60" cy="94" rx="28" ry="21" fill="#E9A93A"/><ellipse cx="60" cy="100" rx="15" ry="12" fill="#FBE6C2"/>'+
+      '<ellipse cx="45" cy="113" rx="8" ry="5" fill="#B97C14"/><ellipse cx="75" cy="113" rx="8" ry="5" fill="#B97C14"/>'+
+      '<rect x="41" y="71" width="38" height="7" rx="3.5" fill="#1E6B4A"/><circle cx="60" cy="81" r="4.5" fill="#F4F7F3" stroke="#1E6B4A" stroke-width="1.5"/>'+
+      '<g class="bi-ear l"><path d="M38 24 q-18 6 -11 36 q11 2 15 -11 Z" fill="#B97C14"/></g>'+
+      '<g class="bi-ear r"><path d="M82 24 q18 6 11 36 q-11 2 -15 -11 Z" fill="#B97C14"/></g>'+
+      '<circle cx="60" cy="44" r="28" fill="#E9A93A"/><ellipse cx="71" cy="38" rx="9" ry="8" fill="#F7D9A6"/>'+
+      '<ellipse cx="60" cy="56" rx="16" ry="12" fill="#FBE6C2"/>'+
+      '<g class="bi-eyes"><circle cx="50" cy="40" r="4.2" fill="#14302A"/><circle cx="70" cy="40" r="4.2" fill="#14302A"/><circle cx="51.5" cy="38.5" r="1.4" fill="#FFFFFF"/><circle cx="71.5" cy="38.5" r="1.4" fill="#FFFFFF"/></g>'+
+      '<circle cx="41" cy="52" r="3.6" fill="#F2A07B" opacity=".7"/><circle cx="79" cy="52" r="3.6" fill="#F2A07B" opacity=".7"/>'+
+      '<ellipse cx="60" cy="51" rx="5.2" ry="3.8" fill="#14302A"/>'+
+      '<path class="bi-tongue" d="M56.5 58 q3.5 10 7 0 Z" fill="#E36F6F"/>'+
+      '<path d="M53 57 q7 6.5 14 0" stroke="#14302A" stroke-width="2.2" fill="none" stroke-linecap="round"/>'+
+      '<g class="p p0"><rect x="88" y="48" width="10" height="16" rx="5" fill="#F4F7F3" stroke="#14302A" stroke-width="2"/><path d="M93 64 v10" stroke="#F4F7F3" stroke-width="3"/><ellipse cx="90" cy="80" rx="8" ry="6" fill="#E9A93A" stroke="#B97C14" stroke-width="1.5"/></g>'+
+      '<g class="p p1"><g class="bi-lens"><circle cx="97" cy="46" r="11" fill="#DCEFE4" fill-opacity=".75" stroke="#14302A" stroke-width="3"/><path d="M89 54 l-8 10" stroke="#14302A" stroke-width="4.5" stroke-linecap="round"/></g></g>'+
+      '<g class="p p2"><path d="M60 82 C 82 100, 100 70, 106 94" stroke="#A8402D" stroke-width="3.2" fill="none" stroke-linecap="round"/><circle cx="106" cy="98" r="5" fill="none" stroke="#A8402D" stroke-width="3.2"/></g>'+
+      '<g class="p p3"><ellipse class="bi-paw" cx="93" cy="58" rx="8.5" ry="7.5" fill="#E9A93A" stroke="#B97C14" stroke-width="1.5"/><path d="M104 22 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2Z" fill="#E9A93A"/><path d="M16 30 l1.6 4.4 4.4 1.6 -4.4 1.6 -1.6 4.4 -1.6 -4.4 -4.4 -1.6 4.4 -1.6Z" fill="#4FB585"/></g>'+
+      '<g class="p p4"><ellipse class="bi-wave" cx="92" cy="60" rx="8.5" ry="7.5" fill="#E9A93A" stroke="#B97C14" stroke-width="1.5"/></g>'+
+      '</svg><div class="bi-say" aria-live="polite"><small></small><span class="bi-cap"></span></div></div><p class="bi-note">Ken is an example buddy. Your matches are real people who join.</p></div>';
     document.body.appendChild(ov);
     ov.querySelector('#bi-skip').onclick = close;
     ov.querySelector('#bi-go').onclick = close;
@@ -117,18 +159,19 @@
   }
   function go(i){
     clearTimeout(timer); idx = i;
-    var bars = ov.querySelectorAll('.bi-bars i'), sc = ov.querySelectorAll('.bi-sc'), end = ov.querySelector('.bi-end'), cap = ov.querySelector('.bi-cap');
+    var bars = ov.querySelectorAll('.bi-bars i'), sc = ov.querySelectorAll('.bi-sc'), end = ov.querySelector('.bi-end'), cap = ov.querySelector('.bi-cap'), dog = ov.querySelector('.bi-dog'), say = ov.querySelector('.bi-say'), lbl = say.querySelector('small');
+    say.classList.remove('pop'); void say.offsetWidth; say.classList.add('pop');
     end.classList.remove('on');
     bars.forEach(function(b,j){ b.className = j < i ? 'done' : ''; });
     sc.forEach(function(s){ s.classList.remove('on'); });
     if (i >= scenes.length){
       bars.forEach(function(b){ b.className = 'done'; });
-      end.classList.add('on'); cap.textContent = 'Ready when you are.';
+      end.classList.add('on'); dog.setAttribute('data-s','4'); lbl.textContent = 'Pip'; cap.textContent = 'That’s it! Two minutes to start. Let’s go walkies.';
       ov.querySelector('#bi-go').focus(); return;
     }
     void sc[i].offsetWidth;
     sc[i].classList.add('on'); bars[i].className = 'on';
-    cap.textContent = (i+1) + ' of ' + scenes.length + ' · ' + scenes[i].cap;
+    dog.setAttribute('data-s', String(i)); lbl.textContent = 'Pip · ' + (i+1) + ' of ' + scenes.length; cap.textContent = scenes[i].cap;
     timer = setTimeout(function(){ go(i+1); }, DUR);
   }
   function open(){
